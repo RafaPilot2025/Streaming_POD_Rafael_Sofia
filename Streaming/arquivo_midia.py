@@ -89,13 +89,13 @@ class Musica(ArquivoDeMidia):
         Adiciona uma nota de 0 a 5. Caso fora do intervalo ou inválida, registra erro no log.
         Retorna True se adicionou; False caso contrário.
         """
-        if not isinstance(nota, int):
-            _log_error(f"Musica.avaliar: nota não inteira '{nota}' para '{self.titulo}'.")
-            return False
+        # if not isinstance(nota, int):
+        #     _log_error(f"Musica.avaliar: nota não inteira '{nota}' para '{self.titulo}'.")
+        #     return False
       
-        if nota < 0 or nota > 5:
-            _log_error(f"Musica.avaliar: nota fora do intervalo 0 a 5 ({nota}) para '{self.titulo}'.")
-            return False
+        # if nota < 0 or nota > 5:
+        #     _log_error(f"Musica.avaliar: nota fora do intervalo 0 a 5 ({nota}) para '{self.titulo}'.")
+        #     return False
        
         self.avaliacoes.append(nota)
         return True
@@ -133,9 +133,9 @@ class Podcast(ArquivoDeMidia):
                  reproducoes: int = 0):
         super().__init__(titulo, duracao, artista, reproducoes)
 
-        if not isinstance(episodio, int) or episodio < 1:
-            _log_error(f"Podcast: número de episódio inválido '{episodio}' para '{self.titulo}'; ajustando para 1.")
-            episodio = 1
+        # if not isinstance(episodio, int) or episodio < 1:
+        #     _log_error(f"Podcast: número de episódio inválido '{episodio}' para '{self.titulo}'; ajustando para 1.")
+        #     episodio = 1
 
         self.episodio = episodio
         self.temporada = (temporada or "Temporada").strip()
@@ -154,15 +154,3 @@ class Podcast(ArquivoDeMidia):
         return (f"Podcast(titulo='{self.titulo}', duracao={self.duracao}, artista='{self.artista}', "
                 f"episodio={self.episodio}, temporada='{self.temporada}', host='{self.host}', "
                 f"reproducoes={self.reproducoes})")
-
-
-
-m1 = Musica("Yesterday", 125, "The Beatles")
-m2 = Musica("Bohemian Rhapsody", 354, "Queen")
-
-print(len(ArquivoDeMidia.registroMidia))  
-# 2 (porque temos duas mídias criadas)
-
-achada = ArquivoDeMidia.buscar_por_titulo("Yesterday")
-print(achada)
-# imprime a instância de Musica "Yesterday"

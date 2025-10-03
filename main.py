@@ -1,7 +1,7 @@
 # main.py
 from pathlib import Path
 
-# Importações da classes do pacote
+# Importações das classes do pacote
 from Streaming.menu import Menu
 from Streaming.usuarios import Usuario
 from Streaming.arquivo_midia import ArquivoDeMidia
@@ -9,6 +9,104 @@ from Streaming.arquivo_midia import Musica
 from Streaming.arquivo_midia import Podcast
 from Streaming.playlist import Playlist
 from Streaming.analises import Analises
+from config.lermarkdown import LerMarkdown
+
+
+def importar_markdowns_para_app(app):
+    """
+    Método anterior ao main para poder ler todos os .md da pasta /config
+    usando LerMarkdown e consolida em app. Evita duplicatas.
+    """
+    # Pega todos os arquivos .md da pasta config
+    base_config = Path(__file__).parent / "config"
+    arquivos = sorted(base_config.glob("*.md"))
+    
+    # Se não houver arquivos, avisa e retorna
+    if not arquivos:
+        print("Nenhum .md encontrado em /config.")
+        return
+
+    # índices para deduplicação
+    usuarios_por_nome   = {u.nome.strip().lower(): u for u in app.usuarios}
+    musicas_por_titulo  = {m.titulo.strip().lower(): m for m in app.musicas}
+    podcasts_por_titulo = {p.titulo.strip().lower(): p for p in app.podcasts}
+    playlists_chaves    = {((getattr(pl, "nome", "") or "").strip().lower(), 
+                            (getattr(pl, "dono", "") or "").strip().lower()) 
+                            for pl in app.playlists}
+
+
+    novos_u = novos_m = novos_p = novos_pl = 0
+
+    # Instancia o leitor como um objeto LerMarkdown
+    leitor = LerMarkdown(strict=False)
+
+    # Lê todos os arquivos .md da lista arquivos
+    for arq in arquivos:
+        print(f"\n=== Lendo: {arq.name} ===")
+        try:
+            # o LerMarkdown já resolve caminho relativo a /config
+            result = leitor.from_file(arq.name)  
+        except Exception as e:
+            print(f"[ERRO] {arq.name}: {e}")
+            continue
+
+        # 1) usuários        
+        for u in result.get("usuarios", []):
+            k = u.nome.strip().lower()
+            if k not in usuarios_por_nome:
+                app.usuarios.append(u)
+                usuarios_por_nome[k] = u
+                novos_u += 1
+
+        # 2) músicas    
+        for m in result.get("musicas", []):
+            k = m.titulo.strip().lower()
+            if k not in musicas_por_titulo:
+                app.musicas.append(m)
+                musicas_por_titulo[k] = m
+                novos_m += 1
+
+        # 3) podcasts
+        for p in result.get("podcasts", []):
+            k = p.titulo.strip().lower()
+            if k not in podcasts_por_titulo:
+                app.podcasts.append(p)
+                podcasts_por_titulo[k] = p
+                novos_p += 1
+
+        # 4) playlists
+        for pl in result.get("playlists", []):
+            # pegue o dono como string para exibir/armazenar (sem lower aqui!)
+            dono_nome = (getattr(pl, "dono", "") or "").strip() or "Usuário não informado"
+            # crie uma chave normalizada para deduplicar
+            dono_key  = dono_nome.lower()
+
+            chave_pl = (pl.nome.strip().lower(), dono_key)
+            if chave_pl in playlists_chaves:
+                continue
+
+            itens = list(getattr(pl, "itens", []) or [])
+            reproducoes = int(getattr(pl, "reproducoes", 0) or 0)
+
+            # armazene 'dono' com a capitalização original
+            nova = Playlist(pl.nome, dono_nome, itens=itens, reproducoes=reproducoes)
+            app.playlists.append(nova)
+            playlists_chaves.add(chave_pl)
+            novos_pl += 1
+
+
+
+        # exibir avisos/erros do parser (opcional)
+        for w in result.get("warnings", []):
+            print(" - WARN:", w)
+        for e in result.get("errors", []):
+            print(" - ERRO:", e)
+
+    print("\n--- Importação concluída ---")
+    print(f"Novos usuários:   {novos_u}")
+    print(f"Novas músicas:    {novos_m}")
+    print(f"Novos podcasts:   {novos_p}")
+    print(f"Novas playlists:  {novos_pl}")
 
 
 # Controlador do APP (local de toda a regra de negócio)
@@ -223,8 +321,15 @@ def main():
                     )
                     print(f"Relatório salvo em {destino}")
 
-                # "9": "Sair":
+                
+
+                #"9: Ler arquivo markdown e importar mídias":
                 case "9":
+                    importar_markdowns_para_app(app)
+                    print("Importação concluída.")
+
+                # "10": "Sair":
+                case "10":
                     print(f"👤 Usuário '{usuario_logado.nome}' saiu da conta.")
                     usuario_logado = None
 

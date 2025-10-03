@@ -19,15 +19,15 @@ class Playlist:
     Classe de uma playlist de mídias contendo músicas e podcasts.
     Com os seguintes atributos:
         nome (str): com o nome da playlist
-        usuario (str): com o nome do criador da playlist
+        dono (str): com o nome do criador da playlist
         itens (list): lista de objetos de ArquivoDeMidia
         reproducoes (int): um contador de execuções da playlist
     """
     
     # Método construtor
-    def __init__(self, nome: str, usuario: str, itens=None, reproducoes: int = 0):
+    def __init__(self, nome: str, dono: str, itens=None, reproducoes: int = 0):
         self.nome = (nome or "Sem nome").strip()
-        self.usuario = (usuario or "Usuário não informado").strip()
+        self.dono = (dono or "Usuário não informado").strip()
         self.itens = list(itens) if itens else []
         self.reproducoes = reproducoes
 
@@ -107,7 +107,7 @@ class Playlist:
         self.reproducoes = int(self.reproducoes) + int(outra.reproducoes)
         
         # Cria a terceira playlist - cópia do estado atual de self
-        terceira = Playlist(nome=self.nome, usuario=self.usuario,
+        terceira = Playlist(nome=self.nome, dono=self.dono,
                             itens=list(self.itens), reproducoes=self.reproducoes)
         return terceira
 
@@ -129,7 +129,7 @@ class Playlist:
         """
         Método que compara se duas playlist são iguais
         Duas playlists são iguais se:
-        - Possui o mesmo nome do criador (usuario)
+        - Possui o mesmo nome do criador (dono)
         - Possui o mesmo nome (nome)
         - Possui a mesma quantidade de mídias
         - Possui os mesmos nomes das mídias (ordem não importa)
@@ -145,7 +145,7 @@ class Playlist:
             return False
         
         # Nome do usuário (criador)
-        if (self.usuario or "").strip().lower() != (outra.usuario or "").strip().lower():
+        if (self.dono or "").strip().lower() != (outra.dono or "").strip().lower():
             return False
 
         # Quantidade de mídias
@@ -169,14 +169,14 @@ class Playlist:
     # Método __str__
     def __str__(self):
         midias_str = "\n  ".join(str(m) for m in self.itens) if self.itens else "Nenhuma mídia"
-        return (f"Playlist '{self.nome}' de {self.usuario}\n"
+        return (f"Playlist '{self.nome}' de {self.dono}\n"
             f" - {len(self.itens)} mídias\n"
             f" - {self.reproducoes} reproduções\n"
             f" - Mídias:\n  {midias_str}")
 
     # Método __repr__
     def __repr__(self):
-        return (f"Playlist(nome={self.nome!r}, usuario={self.usuario!r}, "
+        return (f"Playlist(nome={self.nome!r}, dono={self.dono!r}, "
                 f"itens={len(self.itens)} itens, reproducoes={self.reproducoes})")
 
     

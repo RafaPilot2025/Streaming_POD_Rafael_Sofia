@@ -17,7 +17,8 @@ class Menu:
             "6": "Criar nova playlist",
             "7": "Concatenar playlists",
             "8": "Gerar relatório",
-            "9": "Sair"
+            "9": "Carregar dados via arquvivos markdown",
+            "10": "Sair"
         }
 
     def exibir_menu_inicial(self):

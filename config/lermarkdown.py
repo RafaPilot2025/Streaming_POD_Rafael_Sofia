@@ -6,20 +6,13 @@ import sys
 import os
 import math
 
-# Importa suas classes
-# Estrutura: (seu-projeto)/
-#   ├─ Streaming/usuario.py, musica.py, podcast.py, playlist.py, arquivo_de_midia.py ...
-#   └─ config/Exemplo Entrada - 1.md  e este lermarkdown.py
-
-# adiciona (projeto) ao sys.path
-# sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
-
+# Adiciona o diretório raiz do projeto ao sys.path para importar os módulos
 root = str(Path(__file__).resolve().parent.parent)
 if root not in sys.path:
     sys.path.insert(0, root)
 
 from Streaming.usuarios import Usuario
-from Streaming.arquivo_midia import Musica, Podcast, ArquivoDeMidia
+from Streaming.arquivo_midia import Musica, Podcast
 from Streaming.playlist import Playlist
 
 class LerMarkdown:
@@ -239,8 +232,8 @@ class LerMarkdown:
 
     def _load_playlists(self, records):
         for r in records:
-            nome    = (r.get("nome")    or "").strip()
-            usuario = (r.get("usuario") or "").strip()
+            nome    = (r.get("nome") or "").strip()
+            dono    = (r.get("dono") or "").strip()
             itens   = [ (x or "").strip() for x in (r.get("itens") or []) ]
 
             if not nome:
@@ -258,8 +251,8 @@ class LerMarkdown:
             if dups:
                 self._log_warn(f"Playlist '{nome}' tem itens repetidos: {dups}. Mantendo uma ocorrência de cada.")
 
-            # Instancia playlist (usuario ainda é string; resolvemos depois)
-            pl = self._make_playlist(nome, usuario, itens_unique)
+            # Instancia playlist (dono agora é string; resolvemos depois)
+            pl = self._make_playlist(nome, dono, itens_unique)
             self._playlists.append(pl)
 
     # ------------------- Resolvedor de vínculos -------------------
@@ -307,54 +300,63 @@ class LerMarkdown:
                 artista=artista, 
                 genero=genero)
 
-    def _make_podcast(self, titulo, duracao, artista, episodio, temporada, host):
+    def _make_podcast(self, titulo, temporada, episodio, host, duracao):
+        """
+        Assinatura alinhada ao que vem do Markdown:
+        titulo (str), temporada (str), episodio (int), host (str), duracao (int)
+
+        Mapeia para o construtor:
+        Podcast(titulo, duracao, artista, episodio, temporada, host)
+        Usamos host como 'artista' por falta desse campo no .md.
+        """
         return Podcast(
             titulo=titulo,
             duracao=duracao,
-            artista=artista,
+            artista=host,       # <- aqui host cumpre o papel de 'artista'
             episodio=episodio,
             temporada=temporada,
             host=host
         )
 
-    def _make_playlist(self, nome, usuario_nome, itens_titles):
+    def _make_playlist(self, nome, dono_nome, itens_titles):
         """
-        Tenta múltiplas assinaturas:
-        1) Playlist(nome, usuario_nome, itens_titles)
-        2) Playlist(nome, usuario_nome)
-        3) Playlist(nome=..., usuario=..., itens=...)
+        Assinaturas compatíveis com o novo modelo (dono:str):
+        1) Playlist(nome, dono_nome, itens_titles)
+        2) Playlist(nome, dono_nome)
+        3) Playlist(nome=..., dono=..., itens=...)
+        4) Playlist(nome=..., dono=...)
         """
-        # tentativa 1
+        # 1) posicional com itens
         try:
-            return Playlist(nome, usuario_nome, itens_titles)
+            return Playlist(nome, dono_nome, itens_titles)
         except TypeError:
             pass
-        # tentativa 2
+        # 2) posicional sem itens
         try:
-            return Playlist(nome, usuario_nome)
+            return Playlist(nome, dono_nome)
         except TypeError:
             pass
-        # tentativa 3 (nomeados)
+        # 3) nomeado com itens
         try:
-            return Playlist(nome=nome, usuario=usuario_nome, itens=itens_titles)
+            return Playlist(nome=nome, dono=dono_nome, itens=itens_titles)
         except TypeError:
-            # último recurso: nome + usuario nomeado
-            return Playlist(nome=nome, usuario=usuario_nome)
+            # 4) nomeado sem itens
+            return Playlist(nome=nome, dono=dono_nome)
 
     # ------------------- Operações robustas de Playlist/Usuario -------------------
     def _get_playlist_owner_name(self, pl):
-        # tenta atributo .usuario como string ou objeto
-        u = getattr(pl, "usuario", None)
-        if isinstance(u, str):
-            return u.strip()
-        if u is not None and hasattr(u, "nome"):
-            return getattr(u, "nome")
-        # algumas implementações usam .dono
+        # 1) novo campo: dono (sempre string no seu modelo)
         d = getattr(pl, "dono", None)
-        if isinstance(d, str):
+        if isinstance(d, str) and d.strip():
             return d.strip()
-        if d is not None and hasattr(d, "nome"):
-            return getattr(d, "nome")
+
+        # # 2) compat legada (se por acaso alguma instância antiga ainda tiver 'usuario')
+        # u = getattr(pl, "usuario", None)
+        # if isinstance(u, str) and u.strip():
+        #     return u.strip()
+        # if u is not None and hasattr(u, "nome"):
+        #     return getattr(u, "nome")
+
         return None
 
     def _get_playlist_name(self, pl):

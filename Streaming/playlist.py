@@ -25,9 +25,12 @@ class Playlist:
     """
     
     # Método construtor
-    def __init__(self, nome: str, dono: str, itens=None, reproducoes: int = 0):
+    def __init__(self, nome: str, dono: str = "Não Informado", itens=None, reproducoes: int = 0):
         self.nome = (nome or "Sem nome").strip()
-        self.dono = (dono or "Usuário não informado").strip()
+        # Força que o atributo dono seja uma string
+        dono_str = (dono.nome if hasattr(dono, "nome") else str(dono or "Não informado")).strip()
+        self.dono = dono_str
+
         self.itens = list(itens) if itens else []
         self.reproducoes = reproducoes
 

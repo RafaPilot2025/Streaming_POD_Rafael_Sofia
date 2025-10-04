@@ -240,19 +240,20 @@ class LerMarkdown:
                 self._log_err("Playlist sem nome; ignorada.", r)
                 continue
 
-            # Normaliza itens duplicados dentro da mesma playlist
-            seen, dups, itens_unique = set(), [], []
+            # Verifica os itens únicos e os itens duplicados dentro da mesma playlist
+            seen, dups, itens_unicos = set(), [], []
             for t in itens:
                 if t in seen:
                     dups.append(t)
                 else:
                     seen.add(t)
-                    itens_unique.append(t)
+                    itens_unicos.append(t)
             if dups:
                 self._log_warn(f"Playlist '{nome}' tem itens repetidos: {dups}. Mantendo uma ocorrência de cada.")
 
-            # Instancia playlist (dono agora é string; resolvemos depois)
-            pl = self._make_playlist(nome, dono, itens_unique)
+            # Instancia playlist (dono agora é string)
+            print (itens_unicos)            
+            pl = self._make_playlist(nome, dono, itens_unicos)
             self._playlists.append(pl)
 
     # ------------------- Resolvedor de vínculos -------------------
@@ -363,7 +364,8 @@ class LerMarkdown:
         return (getattr(pl, "nome", None) or "").strip() or str(pl)
 
     def _get_playlist_titles(self, pl):
-        """Retorna a lista de títulos que veio do MD (antes da resolução) ou, se não houver, os nomes das mídias já anexadas."""
+        """Retorna a lista de títulos que veio do MD (antes da resolução) 
+        ou, se não houver, os nomes das mídias já anexadas."""
         # se a classe guardou temporariamente títulos em atributo auxiliar:
         titles = getattr(pl, "_titulos_md", None)
         if isinstance(titles, list):

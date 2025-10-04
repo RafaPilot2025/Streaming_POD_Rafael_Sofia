@@ -108,7 +108,7 @@ class Analises:
 
         linhas.append("— Playlist mais popular —")
         if pl_pop:
-            linhas.append(f"'{pl_pop.nome}' — criador: {pl_pop.usuario} | itens: {len(pl_pop)} | reproduções: {pl_pop.reproducoes}")
+            linhas.append(f"'{pl_pop.nome}' — criador: {pl_pop.dono} | itens: {len(pl_pop)} | reproduções: {pl_pop.reproducoes}")
         else:
             linhas.append("Nenhuma playlist cadastrada.")
         linhas.append("")

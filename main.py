@@ -275,7 +275,7 @@ def main():
                             continue
 
                         # Chama o construtor da playlist
-                        pl = Playlist(nome, usuario_logado)
+                        pl = Playlist(nome, usuario_logado.nome)
                         app.playlists.append(pl)
                         print(f"Playlist '{pl.nome}' criada.")
 

@@ -57,8 +57,6 @@ class Usuario:
         self.historico.append(musica)
     
 
-
-        
-
-
-
+if __name__ == "__main__":
+    u = Usuario("Ana Silva")
+    print(u)

@@ -151,17 +151,20 @@ def main():
     # app.musicas.append(Musica("Song B", 200, "Artist Y"))
     # app.podcasts.append(Podcast("Pod 1", 1200, "Host Z"))
 
+    importar_markdowns_para_app(app)
+    print("Importação concluída.")
+ 
     # Para manter a compatibilidade com fluxo atual
     usuarios = app.usuarios          
-    usuario_logado: Usuario | None = None
-
+    usuario_logado = None 
+    
     while True:
         if not usuario_logado:
             # Manipulação do menu inicial: menu.py exibe; main.py controla
             opcao = menu.exibir_menu_inicial()
 
             match opcao:
-                # "1": "Fazer login":
+                # "1": Fazer login":
                 case "1":
                     if not usuarios:
                         print("Nenhum usuário cadastrado. Crie um novo usuário primeiro.")
@@ -319,9 +322,7 @@ def main():
                         pasta="Relatório",
                         arquivo="relatorio.txt",
                     )
-                    print(f"Relatório salvo em {destino}")
-
-                
+                    print(f"Relatório salvo em {destino}")               
 
                 #"9: Ler arquivo markdown e importar mídias":
                 case "9":

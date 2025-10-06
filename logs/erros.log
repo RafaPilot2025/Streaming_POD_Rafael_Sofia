@@ -486,3 +486,243 @@ WARNINGS:
 ERRORS:
  - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
  - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 09:42:27] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 09:42:27] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 09:52:13] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 09:52:13] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 10:50:01] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 10:50:01] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 10:53:56] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 10:53:56] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 10:57:39] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 10:57:39] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 10:57:58] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 10:57:58] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 11:00:34] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 11:00:34] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 11:05:10] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 11:05:10] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 14:37:01] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 14:37:01] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}
+[2025-10-06 14:37:02] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Episódio inválido em 'Rolling in the Deep': ''. Usando 0.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Estudos' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Beatriz', 'playlists': ['Estudos', 'Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'História da Música', 'temporada': 'CulturaSonora', 'episodio': '7', 'host': 'Pedro Almeida', 'duracao': '1500'}
+[2025-10-06 14:37:02] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Fur Elise': ''. Usando 0.
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Treino' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Relax' referencia usuário inexistente 'Não informado'.
+ - Playlist 'Chill' referencia usuário inexistente 'Não informado'.
+ERRORS:
+ - Música sem título; ignorada. | Registro: {'nome': 'Ana', 'playlists': ['Chill']}
+ - Playlist sem nome; ignorada. | Registro: {'titulo': 'Cinema em Debate', 'temporada': 'CineCast', 'episodio': '42', 'host': 'João Oliveira', 'duracao': '0'}

@@ -12,7 +12,7 @@ from Streaming.analises import Analises
 from config.lermarkdown import LerMarkdown
 
 
-def importar_markdowns_para_app(app):
+def importar_markdowns_para_main(app):
     """
     Método anterior ao main para poder ler todos os .md da pasta /config
     usando LerMarkdown e consolida em app. Evita duplicatas.
@@ -151,7 +151,7 @@ def main():
     # app.musicas.append(Musica("Song B", 200, "Artist Y"))
     # app.podcasts.append(Podcast("Pod 1", 1200, "Host Z"))
 
-    importar_markdowns_para_app(app)
+    importar_markdowns_para_main(app)
     print("Importação concluída.")
  
     # Para manter a compatibilidade com fluxo atual
@@ -326,7 +326,7 @@ def main():
 
                 #"9: Ler arquivo markdown e importar mídias":
                 case "9":
-                    importar_markdowns_para_app(app)
+                    importar_markdowns_para_main(app)
                     print("Importação concluída.")
 
                 # "10": "Sair":

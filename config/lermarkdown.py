@@ -6,47 +6,70 @@ import sys
 import os
 import math
 
-# Adiciona o diretório raiz do projeto ao sys.path para importar os módulos
-root = str(Path(__file__).resolve().parent.parent)
-if root not in sys.path:
-    sys.path.insert(0, root)
+# Adiciona o diretório raiz do projeto (exemplo notebook: "C:\Git_hub\Streaming_POD_Rafael_Sofia")
+# ao sys.path para importar os módulos
+raiz_sistema = str(Path(__file__).resolve().parent.parent)
+if raiz_sistema not in sys.path:
+    sys.path.insert(0, raiz_sistema)
 
+# Importa os arquivos .py dentro da pasta Streaming e os seus respectivos métodos
 from Streaming.usuarios import Usuario
-from Streaming.arquivo_midia import Musica, Podcast
+from Streaming.arquivo_midia import Musica
+from Streaming.arquivo_midia import Podcast
 from Streaming.playlist import Playlist
 
 class LerMarkdown:
     """
-    Faz a leitura e instancia de objetos a partir de arquivos .md 
+    Faz a leitura e instancia os objetos a partir de arquivos .md 
     no formato passado no arquivo markdown de exemplo.    
     - Resolve referências (playlists -> mídias e usuário)
     - Loga avisos/erros em logs/erros.log
     """
 
+    # Construtor da classe LerMarkdown contendo apenas a sua preparação de endereçamento
     def __init__(self, strict: bool = False):
         self.strict = strict
-        self._reset_state()
+        # Chama um outro método para inicializar ou criar os atributos dinâmicos
+        self._reset_estados()
+        # Guarda em atributos os caminhos (endereços) relativos ao projeto
+        self._here = Path(__file__).resolve()             # No notebook: "C:\Git_hub\Streaming_POD_Rafael_Sofia\config\lermarkdown.py"
+        self._project_root = self._here.parents[1]        # Sobe 2 níveis: "C:\Git_hub\Streaming_POD_Rafael_Sofia"
+        self._logs_dir = self._project_root / "logs"      # No notebook: "C:\Git_hub\Streaming_POD_Rafael_Sofia\logs"
+        self._logs_dir.mkdir(parents=True, exist_ok=True) # Cria a pasta logs/ se não existir
+        self._log_file = self._logs_dir / "erros.log"     # Define o caminho para salvar erros
 
-        # caminhos (relativos ao projeto)
-        self._here = Path(__file__).resolve()              # .../config/lermarkdown.py
-        self._project_root = self._here.parents[1]         # (seu-projeto)/
-        self._logs_dir = self._project_root / "logs"
-        self._logs_dir.mkdir(parents=True, exist_ok=True)
-        self._log_file = self._logs_dir / "erros.log"
-
-    # ------------------- API pública -------------------
+    # Método que vai inicializar ou limpar os atributos dinâmicos do LerMarkdown
+    def _reset_estados(self):
+        self.warnings = []
+        self.errors = []       
+        self._usuario = []
+        self._musicas = []
+        self._podcast = []        
+        self._playlists = []
+        # Criação de índices auxiliares para permitir buscas rápidas
+        self._usuarios_by_nome = {}
+        self._midias_by_titulo = {}
+        self._playlist_by_titulo_autor = {}
+        
+    # A partir do caminho raiz_do_md encontra o arquivo de nome passado, lê e coloca como
+    # uma string em text
     def from_file(self, md_filename: str):
         """Lê um arquivo .md dentro de config/ e retorna dicionário com objetos e logs."""
-        path_md = (self._here.parent / md_filename).resolve()
-        if not path_md.exists():
-            raise FileNotFoundError(f"Arquivo não encontrado: {path_md}")
-        text = path_md.read_text(encoding="utf-8")
-        return self.parse(text, source=str(path_md))
+        raiz_do_md = (self._here.parent / md_filename).resolve()
+        if not raiz_do_md.exists():
+            raise FileNotFoundError(f"Arquivo não encontrado: {raiz_do_md}")
+        text = raiz_do_md.read_text(encoding="utf-8")
+        return self.parse(text, raiz_arquivo_log=str(raiz_do_md))
 
-    def parse(self, text: str, source: str = "<string>"):
-        """Faz parsing do texto .md e instancia objetos."""
-        self._reset_state()
-        section = None
+    def parse(self, text: str, raiz_arquivo_log: str = "<string>"):
+        """Faz a leitura do texto .md 
+        Percorre os carcateres do arquivo passado como .md
+        Encontra a seção de cada objeto que deve começar com #
+        Instancia os objetos colocando primeiro em um temporário
+        Faz até encontrar o final da seção que deve começar com ---."""
+        # Faz reset nos atributos no objeto LerMarkdown
+        self._reset_estados()
+        secao = None
         buf = []
         current = None
 
@@ -55,20 +78,35 @@ class LerMarkdown:
         while i < len(lines):
             line = lines[i].rstrip("\n")
 
-            # Header de seção "# ..."
+            # Encontra o início de cada seção (conjunto de ojetos) que começa com "# ..."
             if line.strip().startswith("# "):
-                self._flush_section(section, buf)
+
+                self._partes_secao(secao, buf)
                 buf = []
-                section = line.strip()[2:].strip().lower()
+                secao = line.strip()[2:].strip().lower()
                 i += 1
                 continue
 
-            # Separador visual '---' é ignorado
+            # Se encontrar '---', ele decreta o fim da seção
             if line.strip().startswith("---"):
+                # Fecha o item em construção, se houver estiver aberto
+                if current is not None:
+                    buf.append(current)
+                    current = None
+
+                # Faz flush da seção atual
+                if secao and buf:
+                    self._partes_secao(secao, buf)
+                buf = []
+
+                # Encerra a seção, até encontrar com outra com '# '
+                secao = None
+
                 i += 1
                 continue
 
-            # Início de item "- chave: valor"
+
+            # Se encontrar Início de item "- chave: valor"
             if line.strip().startswith("- "):
                 if current is not None:
                     buf.append(current)
@@ -90,13 +128,13 @@ class LerMarkdown:
 
         if current is not None:
             buf.append(current)
-        self._flush_section(section, buf)
+        self._partes_secao(secao, buf)
 
         # Resolver vínculos (depois de todas as seções)
         self._resolve_links()
 
         # Gravar logs
-        self._flush_logs_to_file(source)
+        self._partes_logs_to_file(raiz_arquivo_log)
 
         return {
             "usuarios": list(self._usuarios_by_nome.values()),
@@ -108,13 +146,6 @@ class LerMarkdown:
         }
 
     # ------------------- Parsing helpers -------------------
-    def _reset_state(self):
-        self.warnings = []
-        self.errors = []
-        self._usuarios_by_nome = {}
-        self._midias_by_titulo = {}
-        self._playlists = []
-
     def _is_indented(self, line: str) -> bool:
         if not line.strip():
             return False
@@ -137,10 +168,10 @@ class LerMarkdown:
 
         return key, value
 
-    def _flush_section(self, section, records):
-        if not section or not records:
+    def _partes_secao(self, secao, records):
+        if not secao or not records:
             return
-        s = section.lower()
+        s = secao.lower()
         if "usuário" in s or "usuarios" in s or "usuários" in s:
             self._load_usuarios(records)
         elif "música" in s or "musicas" in s or "músicas" in s:
@@ -150,7 +181,7 @@ class LerMarkdown:
         elif "playlist" in s or "playlists" in s:
             self._load_playlists(records)
         else:
-            self._log_warn(f"Seção desconhecida ignorada: {section!r}")
+            self._log_warn(f"Seção desconhecida ignorada: {secao!r}")
 
     # ------------------- Carregadores de seção -------------------
     def _load_usuarios(self, records):
@@ -162,7 +193,7 @@ class LerMarkdown:
             if nome in self._usuarios_by_nome:
                 self._log_warn(f"Usuário duplicado '{nome}'. Mantendo o primeiro e ignorando o duplicado.")
                 continue
-            u = self._make_usuario(nome)
+            u = self.make_usuario(nome)
             # playl. listadas no md serão associadas na _resolve_links
             self._usuarios_by_nome[nome] = u
 
@@ -287,7 +318,7 @@ class LerMarkdown:
             self._set_playlist_items(pl, resolved)
 
     # ------------------- Criação segura de objetos -------------------
-    def _make_usuario(self, nome):
+    def make_usuario(self, nome):
         try:
             return Usuario(nome)
         except TypeError:
@@ -468,11 +499,11 @@ class LerMarkdown:
             msg = f"{msg} | Registro: {record}"
         self.errors.append(msg)
 
-    def _flush_logs_to_file(self, source: str):
+    def _partes_logs_to_file(self, raiz_arquivo_log: str):
         if not self.warnings and not self.errors:
             return
         now = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-        lines = [f"[{now}] Fonte: {source}"]
+        lines = [f"[{now}] Fonte: {raiz_arquivo_log}"]
         if self.warnings:
             lines.append("WARNINGS:")
             lines.extend(f" - {w}" for w in self.warnings)
@@ -485,6 +516,8 @@ class LerMarkdown:
             if not existing:
                 f.write("# Log de erros/avisos do parser Markdown\n\n")
             f.write("\n".join(lines))
+
+
 
 # ------------------- Execução direta (opcional p/ teste rápido) -------------------
 if __name__ == "__main__":

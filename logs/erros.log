@@ -1319,3 +1319,33 @@ ERRORS:
  - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
  - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
  - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-07 18:40:37] Fonte: C:\GitHub_Rafa\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-07 18:46:21] Fonte: C:\GitHub_Rafa\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.

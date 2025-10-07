@@ -36,14 +36,37 @@ class ArquivoDeMidia:
                 return m
         return None
    
+    # Inovação: leitura de arquivo .txt com a letra da música ou descrição do podcast
+    def _ler_texto_config(self) -> str:
+        """
+        Lê o arquivo config/<titulo>.txt e retorna seu conteúdo como string.
+        Se o arquivo não existir, retorna aviso.
+        """
+        try:
+            base = Path(__file__).parents[1] / "config"
+            caminho = base / f"{self.titulo}.txt"
+            if caminho.exists():
+                return caminho.read_text(encoding="utf-8").strip()
+            else:
+                return f"[Aviso] Arquivo '{caminho.name}' não encontrado em /config."
+        except Exception as e:
+            return f"[Erro ao ler arquivo de configuração: {e}]"
+    
+    
     # Métodos obrigatórios especiais
     # Simula a execução do arquivo de mídia, mostra na tela as informações 
     # contendo título, artista e duração
     def reproduzir(self) -> None:
-        """Simula a execução do arquivo de mídia, incrementando reproduções e exibindo info."""
+        """Simula a execução do arquivo de mídia, incrementando reproduções 
+        e exibe as informações e se exsitir a letra."""
         self.reproducoes += 1
-        print(f"-> Reproduzindo: '{self.titulo}' — {self.artista} de {self.duracao} segundos. (Total de reproduções: {self.reproducoes})")
-
+        print(f"-> Reproduzindo: '{self.titulo}' — {self.artista} "
+              f" Duração: {self.duracao} segundos. Total de reproduções: {self.reproducoes})")
+        # Lê o arquivo midia.txt e imprime seu conteúdo
+        texto = self._ler_texto_config()
+        print(texto)
+    
+    
     #  Compara dois arquivos de mídia (mesmo título e artista).
     def __eq__(self, other) -> bool:
         """Dois arquivos são iguais se título e artista forem iguais, ignora espaços e case."""
@@ -133,10 +156,6 @@ class Podcast(ArquivoDeMidia):
                  episodio: int, temporada: str, host: str,
                  reproducoes: int = 0):
         super().__init__(titulo, duracao, artista, reproducoes)
-
-        # if not isinstance(episodio, int) or episodio < 1:
-        #     _log_error(f"Podcast: número de episódio inválido '{episodio}' para '{self.titulo}'; ajustando para 1.")
-        #     episodio = 1
 
         self.episodio = episodio
         self.temporada = (temporada or "Temporada").strip()

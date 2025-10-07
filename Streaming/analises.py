@@ -1,13 +1,10 @@
-# Streaming/analises.py
-
-# Importação das bibliotecas permitidas
+# Importação das bibliotecas necessárias e permitidas pelo trabalho
 import sys
 import os
 import math
 
 from datetime import datetime
 from pathlib import Path
-
 
 # Evita dependências externas; assume que Musica, Playlist e Usuario
 # já estão definidos no pacote Streaming

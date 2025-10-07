@@ -74,7 +74,7 @@ def importar_markdowns_para_main(app):
                 podcasts_por_titulo[k] = p
                 novos_p += 1
 
-        # 4 - Playlists
+        # 4 - playlists
         for pl in result.get("playlists", []):
             # pegue o dono como string para exibir/armazenar (sem lower aqui!)
             dono_nome = (getattr(pl, "dono", "") or "").strip() or "Usuário não informado"

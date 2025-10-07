@@ -155,6 +155,9 @@ class LerMarkdown:
         }
 
     # ------------------- Parsing helpers -------------------
+    def _norm(self, s: str) -> str:
+        return (s or "").strip().lower()
+    
     def _is_indented(self, line: str) -> bool:
         if not line.strip():
             return False
@@ -214,7 +217,7 @@ class LerMarkdown:
                 self._log_warn(f"Usuário duplicado '{nome}'. Mantendo o primeiro e ignorando o duplicado.")
                 continue
             
-            # Extrai a lista de playlists do MD, podendo ser string ou lista)
+            # Extrai a lista de playlists do MD, podendo ser string ou lista
             pl_do_md = r.get("playlists") or r.get("playlist") or []
             if isinstance(pl_do_md, str):
                 playlists_titles = [t.strip() for t in pl_do_md.split(",") if t.strip()]
@@ -227,7 +230,7 @@ class LerMarkdown:
             u = self.make_usuario(nome, playlists_titles)
             
             # Indexa o nome para depois comparar
-            self._usuarios_by_nome[nome] = u
+            self._usuarios_by_nome[nome.strip().lower()] = u
 
     def _load_musicas(self, records):
         for r in records:
@@ -299,13 +302,21 @@ class LerMarkdown:
     def _load_playlists(self, records):
         for r in records:
             nome  = (r.get("nome") or "").strip()
-            dono  = (r.get("dono") or "").strip()
+            dono_mkd = r.get("dono") or r.get("usuario")
+            dono  = (dono_mkd or "").strip().lower()
             itens = [ (x or "").strip() for x in (r.get("itens") or []) ]
 
+            # Playlist sem dono NÃO é adicionada
             if not nome:
-                self._log_err("Playlist sem nome; ignorada.", r)
+                self._log_warn(f"Playlist '{nome}' ignorada: sem dono/usuario informado.")
                 continue
 
+            # Se o dono não é um usuário conhecido, tb NÃO adiciona            
+            usuario_obj = self._usuarios_by_nome.get(dono)
+            if not usuario_obj:
+                self._log_warn(f"Playlist '{nome}' ignorada: usuário '{dono}' inexistente no banco de dados.")
+                continue            
+            
             # Verificação de nomes únicos, preservando ordem
             seen, dups, itens_unicos = set(), [], []
             for t in itens:

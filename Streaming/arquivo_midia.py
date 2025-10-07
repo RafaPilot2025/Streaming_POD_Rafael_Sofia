@@ -86,31 +86,32 @@ class Musica(ArquivoDeMidia):
 
     def avaliar(self, nota: int) -> bool:
         """
-        Adiciona uma nota de 0 a 5. Caso fora do intervalo ou inválida, registra erro no log.
+        Adiciona uma nota de 0 a 5. Caso fora do intervalo ou inválida, 
+        retorna para o usuário                       
         Retorna True se adicionou; False caso contrário.
         """
-        # if not isinstance(nota, int):
-        #     _log_error(f"Musica.avaliar: nota não inteira '{nota}' para '{self.titulo}'.")
-        #     return False
+        if not isinstance(nota, int):
+             print(f"Nota não inteira '{nota}' para '{self.titulo}'.")
+             return False
       
-        # if nota < 0 or nota > 5:
-        #     _log_error(f"Musica.avaliar: nota fora do intervalo 0 a 5 ({nota}) para '{self.titulo}'.")
-        #     return False
+        if nota < 0 or nota > 5:
+             print(f"Nota fora do intervalo 0 a 5 ({nota}) para '{self.titulo}'.")
+             return False
        
         self.avaliacoes.append(nota)
         return True
 
     # Métodos obrigatórios gerais
     # ToString
-    def __str__(self) -> str:
-        # Calcula a média das avaliações
-        avg = sum(self.avaliacoes) / len(self.avaliacoes) if self.avaliacoes else 0
-        # Formata a string com as informações da música
-        return (f"[Música] '{self.titulo}' — {self.artista} | "
-            f"Gênero: {self.genero} | "
-            f"Duração: {self.duracao}s | "
-            f"Reproduções: {self.reproducoes} | "
-            f"Avaliações: {len(self.avaliacoes)} (média {avg:.2f})")
+    def __str__(self):
+        avg = (sum(self.avaliacoes) / len(self.avaliacoes)) if self.avaliacoes else 0.0
+        return (f"Música:\n"
+                f"  Título       : {self.titulo}\n"
+                f"  Artista      : {self.artista}\n"
+                f"  Gênero       : {self.genero}\n"
+                f"  Duração      : {self.duracao}s\n"
+                f"  Reproduções  : {self.reproducoes}\n"
+                f"  Avaliações   : {len(self.avaliacoes)} (média {avg:.2f})\n")
 
     # Representação oficial
     def __repr__(self) -> str:
@@ -144,10 +145,14 @@ class Podcast(ArquivoDeMidia):
     # Métodos obrigatórios gerais
     # ToString
     def __str__(self) -> str:
-        return (f"O Podcast {self.titulo} do artista {self.artista} |"
-                f"Temporada:{self.temporada}, Episódio:{self.episodio} |"
-                f"Apresentado por {self.host} |"
-                f"Duração de {self.duracao} segundos, tocou: {self.reproducoes} vezes")
+        return (f"Podcast:\n"
+                f"  Título       : {self.titulo}\n"
+                f"  Host         : {self.host}\n"
+                f"  Temporada    : {self.temporada}\n"
+                f"  Episódio     : {self.episodio}\n"
+                f"  Artista      : {self.artista}\n"
+                f"  Duração      : {self.duracao}s\n"
+                f"  Reproduções  : {self.reproducoes}\n")
 
     # Representação oficial
     def __repr__(self) -> str:

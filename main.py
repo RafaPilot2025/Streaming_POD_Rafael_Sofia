@@ -14,7 +14,7 @@ from config.lermarkdown import LerMarkdown
 
 def importar_markdowns_para_main(app):
     """
-    Método anterior ao main para poder ler todos os .md da pasta /config
+    Método rodado antes da main para poder ler todos os .md da pasta /config
     usando LerMarkdown e consolida em app. Evita duplicatas.
     """
     # Pega todos os arquivos .md da pasta config
@@ -50,7 +50,7 @@ def importar_markdowns_para_main(app):
             print(f"[ERRO] {arq.name}: {e}")
             continue
 
-        # 1) usuários        
+        # 1 - Usuários        
         for u in result.get("usuarios", []):
             k = u.nome.strip().lower()
             if k not in usuarios_por_nome:
@@ -58,7 +58,7 @@ def importar_markdowns_para_main(app):
                 usuarios_por_nome[k] = u
                 novos_u += 1
 
-        # 2) músicas    
+        # 2 - Músicas    
         for m in result.get("musicas", []):
             k = m.titulo.strip().lower()
             if k not in musicas_por_titulo:
@@ -66,7 +66,7 @@ def importar_markdowns_para_main(app):
                 musicas_por_titulo[k] = m
                 novos_m += 1
 
-        # 3) podcasts
+        # 3 - Podcasts
         for p in result.get("podcasts", []):
             k = p.titulo.strip().lower()
             if k not in podcasts_por_titulo:
@@ -74,7 +74,7 @@ def importar_markdowns_para_main(app):
                 podcasts_por_titulo[k] = p
                 novos_p += 1
 
-        # 4) playlists
+        # 4 - Playlists
         for pl in result.get("playlists", []):
             # pegue o dono como string para exibir/armazenar (sem lower aqui!)
             dono_nome = (getattr(pl, "dono", "") or "").strip() or "Usuário não informado"
@@ -145,11 +145,6 @@ class StreamingApp:
 def main():
     menu = Menu()
     app = StreamingApp()
-
-    # # (opcional) dados de exemplo para testar rápido
-    # app.musicas.append(Musica("Song A", 180, "Artist X"))
-    # app.musicas.append(Musica("Song B", 200, "Artist Y"))
-    # app.podcasts.append(Podcast("Pod 1", 1200, "Host Z"))
 
     importar_markdowns_para_main(app)
     print("Importação concluída.")
@@ -331,7 +326,7 @@ def main():
 
                 # "10": "Sair":
                 case "10":
-                    print(f"👤 Usuário '{usuario_logado.nome}' saiu da conta.")
+                    print(f"Usuário '{usuario_logado.nome}' saiu da conta.")
                     usuario_logado = None
 
                 case _:

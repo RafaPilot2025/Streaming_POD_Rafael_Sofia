@@ -159,11 +159,13 @@ class Playlist:
     # Métodos obrigatorios
     # Método __str__
     def __str__(self):
-        midias_str = "\n  ".join(str(m) for m in self.itens) if self.itens else "Nenhuma mídia"
-        return (f"Playlist '{self.nome}' de {self.dono}\n"
-            f" - {len(self.itens)} mídias\n"
-            f" - {self.reproducoes} reproduções\n"
-            f" - Mídias:\n  {midias_str}")
+        midias_str = "\n    ".join(str(m).strip() for m in self.itens) if self.itens else "    Nenhuma mídia"
+        return (f"Playlist:\n"
+                f"  Nome         : {self.nome}\n"
+                f"  Usuário      : {self.dono}\n"
+                f"  Total Mídias : {len(self.itens)}\n"
+                f"  Reproduções  : {self.reproducoes}\n"
+                f"  Itens:\n    {midias_str}\n")
 
     # Método __repr__
     def __repr__(self):

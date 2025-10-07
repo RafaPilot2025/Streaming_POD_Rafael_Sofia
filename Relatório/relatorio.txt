@@ -1,21 +1,21 @@
 === Relatório de Análises ===
-Gerado em: 2025-10-06 19:06:10
+Gerado em: 2025-10-07 17:39:45
 
 — Resumo —
 Total de usuários: 3
 Total de músicas: 5
-Total de playlists: 5
+Total de playlists: 7
 Total de reproduções (históricos de usuários): 0
 
 — Top 10 músicas por reproduções —
-01. 'Bohemian Rhapsody' — Queen | reproduções: 3
-02. 'Shape of You' — Ed Sheeran | reproduções: 0
-03. 'Lose Yourself' — Eminem | reproduções: 0
-04. 'Fur Elise' — Beethoven | reproduções: 0
-05. 'Rolling in the Deep' — Adele | reproduções: 0
+01. 'Bohemian Rhapsody' — Queen | reproduções: 5
+02. 'Fur Elise' — Beethoven | reproduções: 4
+03. 'Lose Yourself' — Eminem | reproduções: 3
+04. 'Rolling in the Deep' — Adele | reproduções: 3
+05. 'Shape of You' — Ed Sheeran | reproduções: 0
 
 — Playlist mais popular —
-Nenhuma playlist cadastrada.
+'Treino' — criador: Ana | itens: 5 | reproduções: 4
 
 — Usuário mais ativo —
 Ana — músicas no histórico: 0

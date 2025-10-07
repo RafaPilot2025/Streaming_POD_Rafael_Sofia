@@ -49,7 +49,7 @@ class LerMarkdown:
         # Criação de índices auxiliares para permitir buscas rápidas
         self._usuarios_by_nome = {}
         self._midias_by_titulo = {}
-        self._playlist_by_titulo_autor = {}
+        self._playlist_by_titulo = {}
         
     # A partir do caminho raiz_do_md encontra o arquivo de nome passado, lê e coloca como
     # uma string em text
@@ -78,6 +78,10 @@ class LerMarkdown:
         while i < len(lines):
             line = lines[i].rstrip("\n")
 
+            if line.strip() == "":
+                i+=1
+                continue
+            
             # Encontra o início de cada seção (conjunto de ojetos) que começa com "# ..."
             if line.strip().startswith("# "):
 
@@ -105,12 +109,17 @@ class LerMarkdown:
                 i += 1
                 continue
 
-
-            # Se encontrar Início de item "- chave: valor"
+            # Detecta o início de um item, se encontrar "- chave: valor"
             if line.strip().startswith("- "):
+                # Verifica se há um item em construção ainda não feito                
                 if current is not None:
+                    # Caso exista, coloca ele no buffer
                     buf.append(current)
+                
+                # Inicia um novo dicionário
                 current = {}
+                # Faz a criação do dicionário com a chave e o seu valor
+                # A chave tem inicio na 3 posição
                 k, v = self._parse_key_value(line.strip()[2:])
                 if k:
                     current[k] = v
@@ -152,20 +161,31 @@ class LerMarkdown:
         return line.startswith("    ") or line.startswith("\t")
 
     def _parse_key_value(self, line: str):
-        # "chave: valor" ou "itens: [A, B, C]"
+        
+        # A chave tem que possuir :
+        # Ou seja, tem que ser "chave: valor" ou "itens: [A, B, C]"
         if ":" not in line:
+            # Caso não tenha devolve nulo
             return None, None
+        
+        # Divide a string line em duas key tudo antes do :; e value o resto
         key, value = line.split(":", 1)
+
+        # Normaliza as duas variáveis
         key = key.strip().lower()
         value = value.strip()
 
-        # lista entre colchetes (assumindo que itens não têm vírgula no título)
+        # Se o value tiver entre colchetes, será uma lista
         if value.startswith("[") and value.endswith("]"):
-            inner = value[1:-1].strip()
-            if not inner:
+            # Separa o que está dentro do colchete
+            dentro = value[1:-1].strip()
+            # Caso não tenha nada dentro, retorna vazio
+            if not dentro:
                 return key, []
-            return key, [s.strip() for s in inner.split(",")]
+            # Retorna a chave e o que está dentro dos [] em forma de lista
+            return key, [s.strip() for s in dentro.split(",")]
 
+        # Caso não haja parenteses o valor será devolvido como repartido
         return key, value
 
     def _partes_secao(self, secao, records):
@@ -193,12 +213,27 @@ class LerMarkdown:
             if nome in self._usuarios_by_nome:
                 self._log_warn(f"Usuário duplicado '{nome}'. Mantendo o primeiro e ignorando o duplicado.")
                 continue
-            u = self.make_usuario(nome)
-            # playl. listadas no md serão associadas na _resolve_links
+            
+            # Extrai a lista de playlists do MD, podendo ser string ou lista)
+            pl_do_md = r.get("playlists") or r.get("playlist") or []
+            if isinstance(pl_do_md, str):
+                playlists_titles = [t.strip() for t in pl_do_md.split(",") if t.strip()]
+            elif isinstance(pl_do_md, list):
+                playlists_titles = [(t or "").strip() for t in pl_do_md if (t or "").strip()]
+            else:
+                playlists_titles = []
+            
+            # Cria o usuário 
+            u = self.make_usuario(nome, playlists_titles)
+            
+            # Indexa o nome para depois comparar
             self._usuarios_by_nome[nome] = u
 
     def _load_musicas(self, records):
         for r in records:
+            # Busca o valor (get) no dicionário criado no parse, com a chave criada em cada item
+            # Ou seja, pegue o valor da chave "titulo" desse dicionário”
+            # Se a chave não existir, retorna None e não dê erro
             titulo  = (r.get("titulo")  or "").strip()
             artista = (r.get("artista") or "").strip()
             genero  = (r.get("genero")  or "").strip()
@@ -317,14 +352,74 @@ class LerMarkdown:
 
             self._set_playlist_items(pl, resolved)
 
-    # ------------------- Criação segura de objetos -------------------
-    def make_usuario(self, nome):
-        try:
-            return Usuario(nome)
-        except TypeError:
-            # Caso sua classe exija mais args, tente variações simples aqui
-            return Usuario(nome=nome)
+            # 1) Índice de usuários por nome (normalizado)
+            usuarios_norm = {k.strip().lower(): v for k, v in self._usuarios_by_nome.items()}
 
+            # 2) Para cada playlist, se tiver dono, adiciona o NOME da playlist no usuário
+            for pl in self._playlists:
+                pl_nome = (getattr(pl, "nome", "") or "").strip()
+                if not pl_nome:
+                    continue
+
+                dono = getattr(pl, "usuario", None) or getattr(pl, "dono", None)
+                dono_nome = (getattr(dono, "nome", None) if dono and hasattr(dono, "nome") else dono) or ""
+                dono_nome = (dono_nome or "").strip()
+                if not dono_nome:
+                    continue
+
+                u = usuarios_norm.get(dono_nome.lower())
+                if not u:
+                    # dono não encontrado; segue
+                    continue
+
+                # garante que u.playlists exista e seja lista
+                lst = getattr(u, "playlists", None)
+                if not isinstance(lst, list):
+                    lst = []
+                # acrescente APENAS o nome da playlist (string)
+                lst.append(pl_nome)
+                u.playlists = lst
+
+                # mantém também uma cópia de títulos para conciliação final
+                md_titles = getattr(u, "_playlists_md", None) or []
+                md_titles.append(pl_nome)
+                setattr(u, "_playlists_md", md_titles)
+
+            # 3) Conciliação final por usuário: manter só STRINGS e sem duplicatas (ordem estável)
+            for u in self._usuarios_by_nome.values():
+                nomes_a = getattr(u, "playlists", []) or []
+                nomes_b = getattr(u, "_playlists_md", []) or []
+                merged = []
+                seen = set()
+                for t in list(nomes_a) + list(nomes_b):
+                    if isinstance(t, str):
+                        key = t.strip()
+                        if key and key not in seen:
+                            merged.append(key)
+                            seen.add(key)
+                u.playlists = merged
+
+    # Faz as criações dos diversos objetos lidos nos markdown
+    # Faz a criação dos usuários lidos
+    def make_usuario(self, nome, playlists_titles=None):
+        """
+        Cria o usuário com nome depois coloca as string de nome no construtor.
+        Faz a criação apenas pelo nome para evitar problemas com o consrutor e a existência
+        de playlist duplicadas ou mesmo inexistentes
+        """
+        u = Usuario(nome)
+        
+        # Retira os espaços (normaliza) da lista de títulos recebida
+        titulos = [(t or "").strip() for t in (playlists_titles or []) if (t or "").strip()]
+
+        # Guarda apenas NOMES (strings) no atributo do usuário playlis [nomes:string]
+        u.playlists = list(titulos)
+        
+        # Guarda cópia do MD para futura conciliação
+        setattr(u, "_playlists_md", list(titulos))
+
+        return u
+        
     def _make_musica(self, titulo, artista, genero, duracao):
         return Musica(
                 titulo=titulo, 

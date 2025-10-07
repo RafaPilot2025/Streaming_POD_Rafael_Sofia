@@ -2,18 +2,6 @@ from pathlib import Path
 from datetime import datetime
 from Streaming.arquivo_midia import ArquivoDeMidia
 
-
-# LOG_ERROS = Path("erros.log")
-
-# def _log_erro(msg: str) -> None:
-#     try:
-#         ts = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
-#         antigo = LOG_ERROS.read_text(encoding="utf-8") if LOG_ERROS.exists() else ""
-#         LOG_ERROS.write_text(antigo + f"[{ts}] {msg}\n", encoding="utf-8")
-#     except Exception:
-#         pass
-
-
 class Playlist:
     """
     Classe de uma playlist de mídias contendo músicas e podcasts.

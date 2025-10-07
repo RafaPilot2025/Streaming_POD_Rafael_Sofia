@@ -298,15 +298,15 @@ class LerMarkdown:
 
     def _load_playlists(self, records):
         for r in records:
-            nome    = (r.get("nome") or "").strip()
-            dono    = (r.get("dono") or "").strip()
-            itens   = [ (x or "").strip() for x in (r.get("itens") or []) ]
+            nome  = (r.get("nome") or "").strip()
+            dono  = (r.get("dono") or "").strip()
+            itens = [ (x or "").strip() for x in (r.get("itens") or []) ]
 
             if not nome:
                 self._log_err("Playlist sem nome; ignorada.", r)
                 continue
 
-            # Verifica os itens únicos e os itens duplicados dentro da mesma playlist
+            # Verificação de nomes únicos, preservando ordem
             seen, dups, itens_unicos = set(), [], []
             for t in itens:
                 if t in seen:
@@ -315,30 +315,39 @@ class LerMarkdown:
                     seen.add(t)
                     itens_unicos.append(t)
             if dups:
-                self._log_warn(f"Playlist '{nome}' tem itens repetidos: {dups}. Mantendo uma ocorrência de cada.")
+                self._log_warn(
+                    f"Playlist '{nome}' tem itens repetidos: {dups}. Mantendo uma ocorrência de cada."
+                )
 
-            # Instancia playlist (dono agora é string)
-            print (itens_unicos)            
+            # Cria a playlist com nome, dono (string) e lista de musicas em string
             pl = self._make_playlist(nome, dono, itens_unicos)
+
+            # Guarda os títulos originais para posterior verificação
+            try:
+                setattr(pl, "_titulos_md", list(itens_unicos))
+            except Exception:
+                pass
+
             self._playlists.append(pl)
+
 
     # ------------------- Resolvedor de vínculos -------------------
     def _resolve_links(self):
-        # Vincular playlists ao usuário e aos itens (músicas/podcasts)
+        # 1) Resolver itens de cada playlist por título (e checar dono)
         for pl in self._playlists:
-            # 1) usuário
+            # a) dono (apenas valida/loga; não anexa objetos ao usuário aqui)
             uname = self._get_playlist_owner_name(pl)
             if not uname:
-                self._log_warn(f"Playlist '{self._get_playlist_name(pl)}' sem usuário definido no objeto; tentando o nome do MD se disponível.")
-            if uname and uname not in self._usuarios_by_nome:
-                self._log_warn(f"Playlist '{self._get_playlist_name(pl)}' referencia usuário inexistente '{uname}'.")
-                owner = None
-            else:
-                owner = self._usuarios_by_nome.get(uname)
-                if owner:
-                    self._attach_playlist_to_user(owner, pl)
+                self._log_warn(
+                    f"Playlist '{self._get_playlist_name(pl)}' sem usuário definido no objeto; "
+                    f"tentando o nome do MD se disponível."
+                )
+            elif uname not in self._usuarios_by_nome:
+                self._log_warn(
+                    f"Playlist '{self._get_playlist_name(pl)}' referencia usuário inexistente '{uname}'."
+                )
 
-            # 2) itens (por título)
+            # b) itens por título -> objetos de mídia
             titles = self._get_playlist_titles(pl)
             resolved, missing = [], []
             for t in titles:
@@ -347,57 +356,58 @@ class LerMarkdown:
                     missing.append(t)
                 else:
                     resolved.append(obj)
+
             if missing:
-                self._log_warn(f"Playlist '{self._get_playlist_name(pl)}' contém itens inexistentes: {missing}. Ignorados.")
+                self._log_warn(
+                    f"Playlist '{self._get_playlist_name(pl)}' contém itens inexistentes: {missing}. Ignorados."
+                )
 
             self._set_playlist_items(pl, resolved)
 
-            # 1) Índice de usuários por nome (normalizado)
-            usuarios_norm = {k.strip().lower(): v for k, v in self._usuarios_by_nome.items()}
+        # 2) Fora do loop de playlists: propagar NOME das playlists para o usuário (strings)
+        usuarios_norm = {k.strip().lower(): v for k, v in self._usuarios_by_nome.items()}
 
-            # 2) Para cada playlist, se tiver dono, adiciona o NOME da playlist no usuário
-            for pl in self._playlists:
-                pl_nome = (getattr(pl, "nome", "") or "").strip()
-                if not pl_nome:
-                    continue
+        for pl in self._playlists:
+            pl_nome = (getattr(pl, "nome", "") or "").strip()
+            if not pl_nome:
+                continue
 
-                dono = getattr(pl, "usuario", None) or getattr(pl, "dono", None)
-                dono_nome = (getattr(dono, "nome", None) if dono and hasattr(dono, "nome") else dono) or ""
-                dono_nome = (dono_nome or "").strip()
-                if not dono_nome:
-                    continue
+            dono = getattr(pl, "usuario", None) or getattr(pl, "dono", None)
+            dono_nome = (getattr(dono, "nome", None) if dono and hasattr(dono, "nome") else dono) or ""
+            dono_nome = (dono_nome or "").strip()
+            if not dono_nome:
+                continue
 
-                u = usuarios_norm.get(dono_nome.lower())
-                if not u:
-                    # dono não encontrado; segue
-                    continue
+            u = usuarios_norm.get(dono_nome.lower())
+            if not u:
+                # dono não encontrado; ignora
+                continue
 
-                # garante que u.playlists exista e seja lista
-                lst = getattr(u, "playlists", None)
-                if not isinstance(lst, list):
-                    lst = []
-                # acrescente APENAS o nome da playlist (string)
-                lst.append(pl_nome)
-                u.playlists = lst
+            # garante lista e adiciona o NOME da playlist
+            lst = getattr(u, "playlists", None)
+            if not isinstance(lst, list):
+                lst = []
+            lst.append(pl_nome)
+            u.playlists = lst
 
-                # mantém também uma cópia de títulos para conciliação final
-                md_titles = getattr(u, "_playlists_md", None) or []
-                md_titles.append(pl_nome)
-                setattr(u, "_playlists_md", md_titles)
+            # mantém também a cópia md para conciliação final
+            md_titles = getattr(u, "_playlists_md", None) or []
+            md_titles.append(pl_nome)
+            setattr(u, "_playlists_md", md_titles)
 
-            # 3) Conciliação final por usuário: manter só STRINGS e sem duplicatas (ordem estável)
-            for u in self._usuarios_by_nome.values():
-                nomes_a = getattr(u, "playlists", []) or []
-                nomes_b = getattr(u, "_playlists_md", []) or []
-                merged = []
-                seen = set()
-                for t in list(nomes_a) + list(nomes_b):
-                    if isinstance(t, str):
-                        key = t.strip()
-                        if key and key not in seen:
-                            merged.append(key)
-                            seen.add(key)
-                u.playlists = merged
+        # 3) Conciliação final: manter apenas STRINGS e sem duplicatas (ordem estável)
+        for u in self._usuarios_by_nome.values():
+            nomes_a = getattr(u, "playlists", []) or []
+            nomes_b = getattr(u, "_playlists_md", []) or []
+            merged, seen = [], set()
+            for t in list(nomes_a) + list(nomes_b):
+                if isinstance(t, str):
+                    key = t.strip()
+                    if key and key not in seen:
+                        merged.append(key)
+                        seen.add(key)
+            u.playlists = merged
+
 
     # Faz as criações dos diversos objetos lidos nos markdown
     # Faz a criação dos usuários lidos
@@ -447,106 +457,114 @@ class LerMarkdown:
 
     def _make_playlist(self, nome, dono_nome, itens_titles):
         """
-        Assinaturas compatíveis com o novo modelo (dono:str):
-        1) Playlist(nome, dono_nome, itens_titles)
-        2) Playlist(nome, dono_nome)
-        3) Playlist(nome=..., dono=..., itens=...)
-        4) Playlist(nome=..., dono=...)
+        Cria a Playlist com o seguinte formato:
+        - dono: criador da playlist como string 
+            (validação: se o usuário não existe, coloca como 'Não Informado' e ERRO)
+        - itens: lista de nomes das musicas (strings), filtrando só os que existem no catálogo
+                (validação: se a música não existente, coloca ERRO e remove)
         """
-        # 1) posicional com itens
-        try:
-            return Playlist(nome, dono_nome, itens_titles)
-        except TypeError:
-            pass
-        # 2) posicional sem itens
-        try:
-            return Playlist(nome, dono_nome)
-        except TypeError:
-            pass
-        # 3) nomeado com itens
-        try:
-            return Playlist(nome=nome, dono=dono_nome, itens=itens_titles)
-        except TypeError:
-            # 4) nomeado sem itens
-            return Playlist(nome=nome, dono=dono_nome)
 
-    # ------------------- Operações robustas de Playlist/Usuario -------------------
+        # Faz a validação dono (como string em usuário) ---
+        dono_val = (dono_nome or "").strip()
+        if not dono_val:
+            dono_val = "Não Informado"
+        elif dono_val not in self._usuarios_by_nome:
+            self._log_err(f"Playlist '{nome}' referencia usuário inexistente '{dono_val}'; usando 'Não Informado'.")
+            dono_val = "Não Informado"
+
+        # Faz a validação das musicas (string) passadas em lista
+        # Se ainda não há catálogo, não arranque tudo à força (evita falso-positivo):
+        # mantém os nomes e deixa a limpeza fina para _resolve_links().
+        filtrados = []
+        if self._midias_by_titulo:
+            for t in (itens_titles or []):
+                tt = (t or "").strip()
+                if not tt:
+                    continue
+                if tt in self._midias_by_titulo:
+                    filtrados.append(tt)
+                else:
+                    self._log_err(f"Playlist '{nome}' contém item inexistente '{tt}'; removido.")
+        else:
+            # catálogo ainda vazio: não validar agora, apenas normalizar
+            filtrados = [ (t or "").strip() for t in (itens_titles or []) if (t or "").strip() ]
+
+        # Cria a Playlist passando as strings (dono + lista de musicas)
+        try:
+            pl = Playlist(nome, dono_val, filtrados)
+        except TypeError:
+            try:
+                pl = Playlist(nome, dono_val)
+                # Mantendo só nomes no estado "bruto" (sem objetos)
+                setattr(pl, "itens", list(filtrados))
+            except TypeError:
+                pl = Playlist(nome=nome, dono=dono_val, itens=filtrados)
+
+        return pl
+
+
+    # --------- Helpers de Playlist/Usuario (robustos a variação de campos) ---------
     def _get_playlist_owner_name(self, pl):
-        # 1) novo campo: dono (sempre string no seu modelo)
+        """Retorna o nome do dono da playlist como string (ou None)."""
+        # modelo atual: campo 'dono' é string
         d = getattr(pl, "dono", None)
         if isinstance(d, str) and d.strip():
             return d.strip()
 
-        # # 2) compat legada (se por acaso alguma instância antiga ainda tiver 'usuario')
-        # u = getattr(pl, "usuario", None)
-        # if isinstance(u, str) and u.strip():
-        #     return u.strip()
-        # if u is not None and hasattr(u, "nome"):
-        #     return getattr(u, "nome")
+        # compat. legada: algumas instâncias antigas podem ter 'usuario'
+        u = getattr(pl, "usuario", None)
+        if isinstance(u, str) and u.strip():
+            return u.strip()
+        if u is not None and hasattr(u, "nome"):
+            nm = getattr(u, "nome", None)
+            if isinstance(nm, str) and nm.strip():
+                return nm.strip()
 
         return None
 
     def _get_playlist_name(self, pl):
+        """Nome da playlist para logs/mensagens."""
         return (getattr(pl, "nome", None) or "").strip() or str(pl)
 
     def _get_playlist_titles(self, pl):
-        """Retorna a lista de títulos que veio do MD (antes da resolução) 
-        ou, se não houver, os nomes das mídias já anexadas."""
-        # se a classe guardou temporariamente títulos em atributo auxiliar:
+        """
+        Devolve os títulos 'brutos' que vieram do MD:
+        1) se pl._titulos_md existir, usa-o;
+        2) senão, se itens/midias tiver strings, retorna as strings;
+        3) senão, se tiver objetos (Musica/Podcast), retorna obj.titulo.
+        """
         titles = getattr(pl, "_titulos_md", None)
         if isinstance(titles, list):
-            return titles
+            return [ (t or "").strip() for t in titles if (t or "").strip() ]
 
-        # se já há objetos na playlist, retorna seus títulos (melhor esforço)
         itens = getattr(pl, "itens", None) or getattr(pl, "midias", None) or []
-        titles = []
+        out = []
         for obj in itens:
-            t = getattr(obj, "titulo", None)
-            if t:
-                titles.append(t)
-        return titles
+            if isinstance(obj, str):
+                tt = (obj or "").strip()
+                if tt:
+                    out.append(tt)
+            else:
+                t = getattr(obj, "titulo", None)
+                if isinstance(t, str) and t.strip():
+                    out.append(t.strip())
+        return out
 
     def _set_playlist_items(self, pl, objetos):
         """
-        Define os itens resolvidos na playlist tentando:
-        - método adicionar_item / add_item por elemento
-        - método adicionar_itens / set_itens em lote
-        - atributo lista 'itens' / 'midias'
-        Além disso, guarda títulos originais do MD em pl._titulos_md (para depuração).
+        Define a lista de itens RESOLVIDOS (objetos Musica/Podcast) na playlist.
+        Tenta métodos/atributos comuns, sem quebrar caso a classe seja diferente.
         """
-        # preserva títulos originais para debug
-        orig = getattr(pl, "_titulos_md", None)
-        if orig is None:
-            # melhor esforço de descobrir títulos originais
-            setattr(pl, "_titulos_md", [getattr(o, "titulo", "") for o in objetos])
-
-        # métodos de adição unitária
-        if hasattr(pl, "adicionar_item"):
-            for o in objetos:
-                try:
-                    pl.adicionar_item(o)
-                except Exception:
-                    pass
-            return
-
-        if hasattr(pl, "add_item"):
-            for o in objetos:
-                try:
-                    pl.add_item(o)
-                except Exception:
-                    pass
-            return
-
-        # métodos/lotes
-        for mname in ("adicionar_itens", "set_itens", "set_midias"):
+        # método em lote
+        for mname in ("set_itens", "definir_itens", "adicionar_itens", "add_itens"):
             if hasattr(pl, mname):
                 try:
-                    getattr(pl, mname)(objetos)
+                    getattr(pl, mname)(list(objetos))
                     return
                 except Exception:
                     pass
 
-        # atributos mutáveis
+        # atributo comum
         for aname in ("itens", "midias"):
             if hasattr(pl, aname):
                 try:
@@ -555,29 +573,29 @@ class LerMarkdown:
                 except Exception:
                     pass
 
-        # se nada funcionou, tente __dict__ direto
+        # fallback hard, força no __dict__
         try:
             pl.__dict__["itens"] = list(objetos)
         except Exception:
-            self._log_warn(f"Não foi possível anexar itens na playlist '{self._get_playlist_name(pl)}' (adicione um método add/adicionar_itens na sua classe).")
+            # não impede o fluxo; apenas registra
+            self._log_warn(
+                f"Não foi possível anexar itens na playlist '{self._get_playlist_name(pl)}' "
+                f"(adicione um método/atributo de itens na sua classe)."
+            )
 
     def _attach_playlist_to_user(self, user_obj, playlist_obj):
-        """Acopla a playlist ao usuário, tentando os métodos/atributos mais comuns."""
-        # método
-        for mname in ("adicionar_playlist", "add_playlist", "registrar_playlist"):
-            if hasattr(user_obj, mname):
-                try:
-                    getattr(user_obj, mname)(playlist_obj)
-                    return
-                except Exception:
-                    pass
-        # atributo lista
-        for aname in ("playlists", "listas", "colecoes"):
-            lst = getattr(user_obj, aname, None)
-            if isinstance(lst, list):
-                if playlist_obj not in lst:
-                    lst.append(playlist_obj)
-                return
+        """
+        Anexa a playlist ao usuário. Como você decidiu que o usuário guarda NOMES,
+        este helper adiciona o NOME da playlist (string) na lista do usuário.
+        """
+        pl_nome = (getattr(playlist_obj, "nome", "") or "").strip()
+        if not pl_nome:
+            return
+        lst = getattr(user_obj, "playlists", None)
+        if not isinstance(lst, list):
+            lst = []
+        lst.append(pl_nome)
+        user_obj.playlists = lst
 
     # ------------------- Utilidades -------------------
     def _to_int(self, value, default=None):

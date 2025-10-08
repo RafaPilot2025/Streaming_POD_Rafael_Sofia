@@ -26,7 +26,7 @@ class Playlist:
     # Adiciona uma mídia à playlist a partir do nome (título)
     def adicionar_midia(self, nome_midia: str) -> bool:
         """
-        Recebe o nome da mídia e consulta a classe ArquivoDeMedIa, 
+        Recebe o nome da mídia e consulta a classe ArquivoDeMidia, 
         através do método ArquivoDeMidia.buscar_por_titulo(titulo)
         - Se achar, adiciona a mídia (nomes) à playlist.
         - Se não achar, registra o erro no log e retorna False.

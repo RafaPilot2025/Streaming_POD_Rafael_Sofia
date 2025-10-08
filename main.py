@@ -277,11 +277,15 @@ def main():
                         app.playlists.append(pl)
                         print(f"Playlist '{pl.nome}' criada.")
 
-                        add = input("Adicionar uma mídia agora? (s/N) ").strip().lower()
-                        if add == "s":
+                        # Pergunta se quer adicionar mídias agora
+                        while True:
+                            add = input("Adicionar mídia? (s/N) ").strip().lower()
+                            # Sai se digitar qualquer coisa diferente de 's'
+                            if add != "s":
+                                break
                             titulo = input("Título exato da música/podcast: ").strip()
-                            # Chama o método adicionar_midia_da_playlist
-                            pl.adicionar_midia(titulo) 
+                            if titulo:
+                                pl.adicionar_midia(titulo)
 
                 # "7": "Concatenar playlists":
                 case "7":

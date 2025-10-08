@@ -1,9 +1,9 @@
-# midia.py
 
 from datetime import datetime
 from pathlib import Path
+from abc import ABC, abstractmethod
 
-class ArquivoDeMidia:
+class ArquivoDeMidia (ABC):
     """
     Classe de um arquivo de mídia genérico (música, podcast, álbum, etc.)
     A igualdade (__eq__) considera apenas título e artista, sendo case insensitive.
@@ -17,6 +17,7 @@ class ArquivoDeMidia:
     # Atributo de classe (compartilhado por todas as instâncias)
     registroMidia = []  
     
+    @abstractmethod
     def __init__(self, titulo: str, duracao: int, artista: str, reproducoes: int = 0):
         
         self.titulo = titulo
@@ -64,9 +65,19 @@ class ArquivoDeMidia:
               f" Duração: {self.duracao} segundos. Total de reproduções: {self.reproducoes})")
         # Lê o arquivo midia.txt e imprime seu conteúdo
         texto = self._ler_texto_config()
-        print(texto)
-    
-    
+        print(texto)       
+        
+        # Chama o método avaliar se existir (somente em Musica)
+        avaliar = getattr(self, "avaliar", None)
+        if callable(avaliar):
+            avaliar()
+            
+        # Método alternativo:
+        # Chame apenas se o método avaliar existir (somente em Musica)
+        # try:
+        #     self.avaliar()
+        # except AttributeError:
+
     #  Compara dois arquivos de mídia (mesmo título e artista).
     def __eq__(self, other) -> bool:
         """Dois arquivos são iguais se título e artista forem iguais, ignora espaços e case."""
@@ -107,21 +118,45 @@ class Musica(ArquivoDeMidia):
         self.genero = (genero or "Não informado").strip().title()
         self.avaliacoes = list(avaliacoes) if isinstance(avaliacoes, list) else []
 
-    def avaliar(self, nota: int) -> bool:
+    def avaliar(self) -> bool:
         """
+        Solicita a avaliação da múscia ao usuário.
         Adiciona uma nota de 0 a 5. Caso fora do intervalo ou inválida, 
         retorna para o usuário                       
         Retorna True se adicionou; False caso contrário.
         """
-        if not isinstance(nota, int):
-             print(f"Nota não inteira '{nota}' para '{self.titulo}'.")
-             return False
-      
+        
+        # Solicita a avaliação (Enter para pular)
+        try:
+            entrada = input("Deseja avaliar a música? Digite uma nota 0-5 ou Enter para pular: ").strip()
+            
+        # Impede a quebra do programa se EOF (Ctrl+D/Ctrl+Z) for enviado
+        except (EOFError):
+            print("Avaliação não registrada.")
+            return False
+
+        # Caso o usuário apenas pressione Enter
+        if entrada == "":
+            print("Avaliação ignorada.")
+            return False
+
+        # Tenta converter a entrada em inteiro
+        try:
+            nota = int(entrada)
+        except ValueError:
+            print("Nota inválida. Use um número inteiro entre 0 e 5.")
+            return False
+
         if nota < 0 or nota > 5:
-             print(f"Nota fora do intervalo 0 a 5 ({nota}) para '{self.titulo}'.")
-             return False
-       
+            print("Nota fora do intervalo. Na próxima, use um número entre 0 e 5!")
+            return False
+            
+        # Adiciona a nota se estiver no intervalo válido na lista de avaliações
         self.avaliacoes.append(nota)
+        media = sum(self.avaliacoes) / len(self.avaliacoes)
+        print(f"Avaliação registrada: {nota}.\n" 
+              f"Média atual: {media:.2f}.\n"
+              f"Mídia com {len(self.avaliacoes)} avaliação(ões).")
         return True
 
     # Métodos obrigatórios gerais

@@ -67,7 +67,7 @@ class Analises:
     @staticmethod
     def total_reproducoes(usuarios):
         """
-        Retorna a total de reproduções feitas por todos os usuários.
+        Retorna o total de reproduções feitas por todos os usuários.
         """
         return sum(len(u.historico or []) for u in usuarios)
 

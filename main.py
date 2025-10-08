@@ -215,6 +215,9 @@ def main():
                     midia = ArquivoDeMidia.buscar_por_titulo(titulo)
                     if midia:
                         midia.reproduzir()
+                        # registra no histórico do usuário logado
+                        if usuario_logado:
+                            usuario_logado.registrar_reproducao(midia.titulo)
                     else:
                         print("Música não encontrada.")
 
@@ -262,6 +265,11 @@ def main():
                     if pl:
                         print(f"Reproduzindo playlist '{pl.nome}':")
                         pl.reproduzir()   # chama o método da classe Playlist
+                        if usuario_logado:
+                            for m in getattr(pl, "itens", []):
+                                t = getattr(m, "titulo", None)
+                                if t:
+                                    usuario_logado.registrar_reproducao(t)
                     else:
                         print("Playlist não encontrada.")
 

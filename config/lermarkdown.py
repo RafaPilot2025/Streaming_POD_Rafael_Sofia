@@ -480,6 +480,7 @@ class LerMarkdown:
         if not dono_val:
             dono_val = "Não Informado"
         elif dono_val not in self._usuarios_by_nome:
+            print("jabuti")
             self._log_err(f"Playlist '{nome}' referencia usuário inexistente '{dono_val}'; usando 'Não Informado'.")
             dono_val = "Não Informado"
 

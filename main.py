@@ -26,7 +26,7 @@ def importar_markdowns_para_main(app):
         print("Nenhum .md encontrado em /config.")
         return
 
-    # índices para deduplicação
+    # Faz os índices para deduplicação posterior
     usuarios_por_nome   = {u.nome.strip().lower(): u for u in app.usuarios}
     musicas_por_titulo  = {m.titulo.strip().lower(): m for m in app.musicas}
     podcasts_por_titulo = {p.titulo.strip().lower(): p for p in app.podcasts}
@@ -76,9 +76,9 @@ def importar_markdowns_para_main(app):
 
         # 4 - playlists
         for pl in result.get("playlists", []):
-            # pegue o dono como string para exibir/armazenar (sem lower aqui!)
+            # Pegando o dono como string para exibir/armazenar (sem lower!)
             dono_nome = (getattr(pl, "dono", "") or "").strip() or "Usuário não informado"
-            # crie uma chave normalizada para deduplicar
+            # Criando uma chave normalizada para deduplicar
             dono_key  = dono_nome.lower()
 
             chave_pl = (pl.nome.strip().lower(), dono_key)
@@ -88,17 +88,15 @@ def importar_markdowns_para_main(app):
             itens = list(getattr(pl, "itens", []) or [])
             reproducoes = int(getattr(pl, "reproducoes", 0) or 0)
 
-            # armazene 'dono' com a capitalização original
+            # Armazenando 'dono' com a capitalização original
             nova = Playlist(pl.nome, dono_nome, itens=itens, reproducoes=reproducoes)
             app.playlists.append(nova)
             playlists_chaves.add(chave_pl)
             novos_pl += 1
 
-
-
-        # exibir avisos/erros do parser (opcional)
+        # Exibir avisos/erros da leitura dos markdown (parser)
         for w in result.get("warnings", []):
-            print(" - WARN:", w)
+            print(" - ATENÇÃO:", w)
         for e in result.get("errors", []):
             print(" - ERRO:", e)
 
@@ -111,18 +109,28 @@ def importar_markdowns_para_main(app):
 
 # Controlador do APP (local de toda a regra de negócio)
 class StreamingApp:
+    # Construtor inicializado pelo LerMarkdown
     def __init__(self):
-        self.usuarios: list[Usuario] = []
+        self.usuarios: list[Usuario] = []   
         self.musicas: list[Musica] = []
         self.podcasts: list[Podcast] = []
         self.playlists: list[Playlist] = []
 
-    # Método para criar um novo usuário e adicioná-lo à lista
+    # Método para criar um novo usuário, a partir do menu sem usuário logado
     def criar_novo_usuario(self, nome: str) -> Usuario:
         u = Usuario(nome)
+        #Testa se o nome já existe (case insensitive, sem espaços)
+        try:
+            if any(existente.nome.lower() == u.nome.strip().lower() for existente in self.usuarios):
+                raise ValueError(f"Usuário com nome '{u.nome}' já existe.")
+        except ValueError:            
+            # Se já existir, não cria e retorna None
+            return None
+        # Caso o nome não exista, adiciona o novo usuário à lista
         self.usuarios.append(u)
         return u
 
+    # Método para salvar relatório em txt
     def salvar_relatorio_txt(self, caminho: Path = Path("relatorios/relatorio.txt")):
         linhas = []
         linhas.append("Relatório do Streaming")
@@ -183,7 +191,11 @@ def main():
                     novo_nome = input("Digite o nome do novo usuário: ").strip()
                     if novo_nome:
                         u = app.criar_novo_usuario(novo_nome)
-                        print(f"Usuário '{u.nome}' criado com sucesso!")
+
+                        if u is None:
+                            print(f"Usuário {novo_nome} já existe. Não será criado!")
+                        else:
+                            print(f"Usuário '{u.nome}' criado com sucesso!")
                     else:
                         print("Nome de usuário não pode ser vazio.")
 

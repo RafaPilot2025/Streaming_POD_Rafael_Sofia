@@ -62,6 +62,7 @@ class LerMarkdown:
         text = raiz_do_md.read_text(encoding="utf-8")
         return self.parse(text, raiz_arquivo_log=str(raiz_do_md))
 
+    # Método que faz a leitura do texto .md e percorre os caracteres do arquivo
     def parse(self, text: str, raiz_arquivo_log: str = "<string>"):
         """Faz a leitura do texto .md 
         Percorre os carcateres do arquivo passado como .md
@@ -158,17 +159,21 @@ class LerMarkdown:
             "errors": list(self.errors),
         }
 
-    # ------------------- Parsing helpers -------------------
+    # Métodos auxiliares de parsing
+    # Normaliza strings (strip + lower)
     def _norm(self, s: str) -> str:
         return (s or "").strip().lower()
     
+    # Verifica se a linha está indentada (4 espaços ou tab)
     def _is_indented(self, line: str) -> bool:
         if not line.strip():
             return False
         return line.startswith("    ") or line.startswith("\t")
 
-    def _parse_key_value(self, line: str):
-        
+    # Método que faz a separação da chave e do valor
+    # A chave tem que possuir :
+    # Também verifica se é lista ou string
+    def _parse_key_value(self, line: str):        
         # A chave tem que possuir :
         # Ou seja, tem que ser "chave: valor" ou "itens: [A, B, C]"
         if ":" not in line:
@@ -195,6 +200,8 @@ class LerMarkdown:
         # Caso não haja parenteses o valor será devolvido como repartido
         return key, value
 
+    # Método que identifica a seção e chama o carregador adequado
+    # para cada seção (usuários, músicas, podcasts, playlists)
     def _partes_secao(self, secao, records):
         if not secao or not records:
             return
@@ -210,7 +217,9 @@ class LerMarkdown:
         else:
             self._log_warn(f"Seção desconhecida ignorada: {secao!r}")
 
-    # ------------------- Carregadores de seção -------------------
+    # Métodos que fazem o carregamento de cada seção
+    # Cada método recebe a lista de registros (dicionários) daquela seção
+    # Carrega os usuários
     def _load_usuarios(self, records):
         for r in records:
             nome = (r.get("nome") or "").strip()
@@ -230,7 +239,7 @@ class LerMarkdown:
             else:
                 playlists_titles = []
 
-            # >>> NOVO BLOCO: detectar duplicatas e logar ERRO
+            # Detecta duplicatas
             seen, dups, unicos = set(), [], []
             for t in playlists_titles:
                 key = self._norm(t)              # normaliza para comparar (strip+lower)
@@ -240,6 +249,7 @@ class LerMarkdown:
                     seen.add(key)
                     unicos.append(t)
 
+            # Loga erro se houver duplicatas
             if dups:
                 self._log_err(
                     f"Usuário '{nome}' possui playlists duplicadas: {dups}. "
@@ -247,7 +257,6 @@ class LerMarkdown:
                 )
 
             playlists_titles = unicos
-            # <<< FIM DO NOVO BLOCO
 
             # Cria o usuário 
             u = self.make_usuario(nome, playlists_titles)
@@ -255,6 +264,7 @@ class LerMarkdown:
             # Indexa o nome para depois comparar
             self._usuarios_by_nome[nome.strip().lower()] = u
 
+    # Carrega as músicas
     def _load_musicas(self, records):
         for r in records:
             # Busca o valor (get) no dicionário criado no parse, com a chave criada em cada item
@@ -286,6 +296,7 @@ class LerMarkdown:
             m = self._make_musica(titulo, artista, genero, dur_int)
             self._midias_by_titulo[titulo_norm] = m
 
+    # Carrega os podcasts
     def _load_podcasts(self, records):
         for r in records:
             titulo     = (r.get("titulo")     or "").strip()
@@ -324,6 +335,7 @@ class LerMarkdown:
             p = self._make_podcast(titulo, temporada, ep_int, host, dur_int)
             self._midias_by_titulo[titulo_norm] = p
 
+    # Carrega as playlists
     def _load_playlists(self, records):
         for r in records:
             nome  = (r.get("nome") or "").strip()
@@ -342,6 +354,7 @@ class LerMarkdown:
                 self._log_warn(f"Playlist '{nome}' ignorada: usuário '{dono}' inexistente no banco de dados.")
                 continue            
             
+            # Verificação das duplicatas na lista
             # Verificação de nomes únicos, preservando ordem
             seen, dups, itens_unicos = set(), [], []
             for t in itens:
@@ -367,7 +380,7 @@ class LerMarkdown:
             self._playlists.append(pl)
 
 
-    # ------------------- Resolvedor de vínculos -------------------
+    # Resolve vínculos (playlists -> strings e usuários)
     def _resolve_links(self):
         # 1) Resolver itens de cada playlist por título (e checar dono)
         for pl in self._playlists:
@@ -466,6 +479,7 @@ class LerMarkdown:
 
         return u
         
+    # Faz a criação das músicas lidas
     def _make_musica(self, titulo, artista, genero, duracao):
         return Musica(
                 titulo=titulo, 
@@ -473,11 +487,11 @@ class LerMarkdown:
                 artista=artista, 
                 genero=genero)
 
+    # Faz a criação dos podcasts lidos
     def _make_podcast(self, titulo, temporada, episodio, host, duracao):
         """
         Assinatura alinhada ao que vem do Markdown:
         titulo (str), temporada (str), episodio (int), host (str), duracao (int)
-
         Mapeia para o construtor:
         Podcast(titulo, duracao, artista, episodio, temporada, host)
         Usamos host como 'artista' por falta desse campo no .md.
@@ -491,6 +505,7 @@ class LerMarkdown:
             host=host
         )
 
+    # Faz a criação das playlists lidas
     def _make_playlist(self, nome, dono_nome, itens_titles):
         """
         Cria a Playlist com o seguinte formato:
@@ -505,7 +520,6 @@ class LerMarkdown:
         if not dono_val:
             dono_val = "Não Informado"
         elif dono_val not in self._usuarios_by_nome:
-            print("jabuti")
             self._log_err(f"Playlist '{nome}' referencia usuário inexistente '{dono_val}'; usando 'Não Informado'.")
             dono_val = "Não Informado"
 
@@ -542,7 +556,8 @@ class LerMarkdown:
         return pl
 
 
-    # --------- Helpers de Playlist/Usuario (robustos a variação de campos) ---------
+    # Funções auxiliares para resolver vínculos
+    # (playlists -> strings e usuários)
     def _get_playlist_owner_name(self, pl):
         """Retorna o nome do dono da playlist como string (ou None)."""
         # modelo atual: campo 'dono' é string
@@ -561,10 +576,12 @@ class LerMarkdown:
 
         return None
 
+    # Nome da playlist para logs/mensagens
     def _get_playlist_name(self, pl):
         """Nome da playlist para logs/mensagens."""
         return (getattr(pl, "nome", None) or "").strip() or str(pl)
 
+    
     def _get_playlist_titles(self, pl):
         """
         Devolve os títulos 'brutos' que vieram do MD:
@@ -624,8 +641,8 @@ class LerMarkdown:
 
     def _attach_playlist_to_user(self, user_obj, playlist_obj):
         """
-        Anexa a playlist ao usuário. Como você decidiu que o usuário guarda NOMES,
-        este helper adiciona o NOME da playlist (string) na lista do usuário.
+        Anexa a playlist ao usuário.
+        Helper que adiciona o NOME da playlist (string) na lista do usuário.
         """
         pl_nome = (getattr(playlist_obj, "nome", "") or "").strip()
         if not pl_nome:
@@ -636,21 +653,26 @@ class LerMarkdown:
         lst.append(pl_nome)
         user_obj.playlists = lst
 
-    # ------------------- Utilidades -------------------
+    # Retorna um int ou None
     def _to_int(self, value, default=None):
         try:
             return int(str(value).strip())
         except Exception:
             return default
 
+    # Métodos de log
+    # Adiciona mensagens de aviso ou erro nas listas internas
     def _log_warn(self, msg: str):
         self.warnings.append(msg)
 
+    # Adiciona mensagens de erro nas listas internas
     def _log_err(self, msg: str, record=None):
         if record is not None:
             msg = f"{msg} | Registro: {record}"
         self.errors.append(msg)
 
+    # Grava os logs em arquivo
+    # Se não houver avisos ou erros, não grava nada
     def _partes_logs_to_file(self, raiz_arquivo_log: str):
         if not self.warnings and not self.errors:
             return
@@ -668,40 +690,3 @@ class LerMarkdown:
             if not existing:
                 f.write("# Log de erros/avisos do parser Markdown\n\n")
             f.write("\n".join(lines))
-
-
-
-# ------------------- Execução direta (opcional p/ teste rápido) -------------------
-if __name__ == "__main__":
-    leitor = LerMarkdown(strict=False)
-    # se nenhum argumento, tenta um dos exemplos na pasta config
-    args = sys.argv[1:]
-    if not args:
-        candidatos = [
-            Path(__file__).parent / "Exemplo Entrada - 1.md",
-            Path(__file__).parent / "Exemplo Entrada - 2.md",
-            Path(__file__).parent / "dados.md",
-        ]
-        arquivos = [p for p in candidatos if p.exists()]
-        if not arquivos:
-            print("Informe o caminho do .md (relativo à pasta config). Ex.:")
-            print("  python lermarkdown.py 'Exemplo Entrada - 1.md'")
-            sys.exit(0)
-    else:
-        arquivos = [ (Path(__file__).parent / a) for a in args ]
-
-    for arq in arquivos:
-        print(f"\n=== Lendo: {arq.name} ===")
-        result = leitor.from_file(arq.name)
-        print(f"Usuarios:  {len(result['usuarios'])}")
-        print(f"Musicas:   {len(result['musicas'])}")
-        print(f"Podcasts:  {len(result['podcasts'])}")
-        print(f"Playlists: {len(result['playlists'])}")
-        if result["warnings"]:
-            print("Warnings:")
-            for w in result["warnings"]:
-                print(" -", w)
-        if result["errors"]:
-            print("Errors:")
-            for e in result["errors"]:
-                print(" -", e)

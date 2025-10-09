@@ -1,28 +1,28 @@
 === Relatório de Análises ===
-Gerado em: 2025-10-08 21:50:43
+Gerado em: 2025-10-09 15:17:52
 
 — Resumo —
 Total de usuários: 4
 Total de músicas: 5
-Total de playlists: 5
-Total de reproduções (históricos de usuários): 16
+Total de playlists: 6
+Total de reproduções (históricos de usuários): 10
 
 — Top 10 músicas por reproduções —
-01. 'Bohemian Rhapsody' — Queen | reproduções: 2
-02. 'Shape of You' — Ed Sheeran | reproduções: 2
+01. 'Shape of You' — Ed Sheeran | reproduções: 3
+02. 'Bohemian Rhapsody' — Queen | reproduções: 2
 03. 'Lose Yourself' — Eminem | reproduções: 2
-04. 'Rolling in the Deep' — Adele | reproduções: 2
-05. 'Fur Elise' — Beethoven | reproduções: 1
+04. 'Fur Elise' — Beethoven | reproduções: 1
+05. 'Rolling in the Deep' — Adele | reproduções: 0
 
 — Playlist mais popular —
-'Favoritas' — criador: ana | itens: 3 | reproduções: 1
+'Teste' — criador: A | itens: 6 | reproduções: 2
 
 — Usuário mais ativo —
-Ana — músicas no histórico: 16
+A — músicas no histórico: 10
 
 — Médias de avaliações por música —
-'Bohemian Rhapsody': 4.50
-'Shape of You': 3.50
-'Lose Yourself': 4.00
-'Fur Elise': 4.00
-'Rolling in the Deep': 4.00
+'Bohemian Rhapsody': 4.00
+'Shape of You': 3.67
+'Lose Yourself': 3.50
+'Fur Elise': 3.00
+'Rolling in the Deep': 0.00

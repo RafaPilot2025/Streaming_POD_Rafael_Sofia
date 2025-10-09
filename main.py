@@ -223,7 +223,7 @@ def main():
             match opcao:
                 # "1": "Reproduzir uma música":
                 case "1":
-                    titulo = input("Título da música a reproduzir: ").strip()
+                    titulo = input("Título da mídia a reproduzir: ").strip()
                     midia = ArquivoDeMidia.buscar_por_titulo(titulo)
                     if midia:
                         midia.reproduzir()

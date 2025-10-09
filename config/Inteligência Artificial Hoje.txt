@@ -1,28 +1,32 @@
-Maria Silva: Bem-vindos ao “Inteligência Artificial Hoje”! No estúdio, direto do tunel do tempo o famoso professor de IA 
-Socrates
+<Maria Silva>: Bem-vindos ao “Inteligência Artificial Hoje”! 
+	       No estúdio, direto do tunel do tempo o famoso professor de IA Socrates
 
-Socrates: Boa tarde! Se Platão tivesse Python, a caverna teria logging.
+<Socrates>:    Boa tarde! Se Platão tivesse Python, a caverna teria logging.
 
-Maria Silva: Professor, o senhor poderia dizer que a IA é um novo Sócrates? Ou um estagiário que não dorme?
-Socrates: Os dois. Faz perguntas incômodas e, ao mesmo tempo, compila às três da manhã sem café.
+<Maria Silva>: Professor, o senhor poderia dizer que a IA é um novo Sócrates? 
+	       Ou um estagiário que não dorme?
+<Socrates>:    Os dois. Faz perguntas incômodas e, ao mesmo tempo, compila às três da manhã sem café.
 
-Maria Silva: O senhor dá aula de IA. Qual a dica de ouro pros alunos?
-Socrates: Nomeiem variáveis como se vocês fossem entender amanhã. Porque amanhã chega.
+<Maria Silva>: O senhor dá aula de IA. Qual a dica de ouro pros alunos?
+<Socrates>:    Nomeiem variáveis como se vocês fossem entender amanhã. 
+               Porque amanhã chega.
 
-Maria Silva: A IA vai tirar empregos?
-Socrates: Vai tirar empregos de quem copia/cola sem pensar. De quem pensa, vira exoesqueleto cognitivo.
+<Maria Silva>: A IA vai tirar empregos?
+<Socrates>:    Vai tirar empregos de quem copia/cola sem pensar. 
+               De quem pensa, vira exoesqueleto cognitivo.
 
-Maria Silva: O senhor não curte esportes, certo? Gosta de correr?
-Socrates: Não! Corrida? Só de complexidade: troco O(n²) por O(n log n) e comemoro com chimarrão.
+<Maria Silva>: O senhor não curte esportes, certo? Gosta de correr?
+<Socrates>:    Não! Corrida? Só de complexidade: troco O(n²) por O(n log n) e comemoro com chimarrão.
 
-Maria Silva: Qual a maior falácia que os alunos têm sobre IA?
-Socrates: Que é magia. Não é. É estatística com autoestima.
+<Maria Silva>: Qual a maior falácia que os alunos têm sobre IA?
+<Socrates>:    Que é magia. Não é. É estatística com autoestima.
 
-Maria Silva: Dica final pros alunos que estudam IA?
-Socrates: Valide entradas, trate exceções e lembrem: “se não está testado, é poesia”. Bonita, porém quebra.
+<Maria Silva>: Dica final pros alunos que estudam IA?
+<Socrates>:    Valide entradas, trate exceções e lembrem: “se não está testado, é poesia”. 
+	       Bonita, porém quebra.
 
-Maria Silva: Filosofia em uma linha de código?
-Socrates: if verdade: questione().
+<Maria Silva>: Filosofia em uma linha de código?
+<Socrates>:    if verdade: questione().
 
-Maria Silva: Professor Socrates, muito obrigado!
-Socrates: Eu que agradeço.
+<Maria Silva>: Professor Socrates, muito obrigado!
+<Socrates>:    Eu que agradeço.

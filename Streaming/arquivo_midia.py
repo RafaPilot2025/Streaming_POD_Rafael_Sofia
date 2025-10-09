@@ -11,9 +11,7 @@ class ArquivoDeMidia (ABC):
     Atributos adicionais são definidos nas subclasses.
     """
 
-    # Lista de instâncias de qualquer objeto de mídia
-    # Utilizado para busca por título da midia, tanto para música quanto podcast
-    # Utilizado na classe playlist para verificar se a mídia existe 
+    # Lista das instâncias dos objeto de mídia (podcast + música)
     # Atributo de classe (compartilhado por todas as instâncias)
     registroMidia = []  
     
@@ -67,16 +65,10 @@ class ArquivoDeMidia (ABC):
         texto = self._ler_texto_config()
         print(texto)       
         
-        # Chama o método avaliar se existir (somente em Musica)
+        # INOVAÇÃO: Chama o método avaliar se existir (somente em Musica)
         avaliar = getattr(self, "avaliar", None)
         if callable(avaliar):
-            avaliar()
-            
-        # Método alternativo:
-        # Chame apenas se o método avaliar existir (somente em Musica)
-        # try:
-        #     self.avaliar()
-        # except AttributeError:
+            avaliar()         
 
     #  Compara dois arquivos de mídia (mesmo título e artista).
     def __eq__(self, other) -> bool:
@@ -117,7 +109,8 @@ class Musica(ArquivoDeMidia):
         super().__init__(titulo, duracao, artista, reproducoes)
         self.genero = (genero or "Não informado").strip().title()
         self.avaliacoes = list(avaliacoes) if isinstance(avaliacoes, list) else []
-
+    
+    # Inovação: método para avaliar a música
     def avaliar(self) -> bool:
         """
         Solicita a avaliação da múscia ao usuário.

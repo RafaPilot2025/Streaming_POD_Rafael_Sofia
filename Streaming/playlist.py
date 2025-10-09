@@ -23,14 +23,14 @@ class Playlist:
         self.itens = list(itens) if itens else []
         self.reproducoes = reproducoes
 
-    # Métodos principais
+    # Métodos obrigatórios
     # Adiciona uma mídia à playlist a partir do nome (título)
     def adicionar_midia(self, nome_midia: str) -> bool:
         """
         Recebe o nome da mídia e consulta a classe ArquivoDeMidia, 
         através do método ArquivoDeMidia.buscar_por_titulo(titulo)
         - Se achar, adiciona a mídia (nomes) à playlist.
-        - Se não achar, registra o erro no log e retorna False.
+        - Se não achar, não adiciona e retorna False.
         """
         titulo = (nome_midia or "").strip()
 
@@ -84,7 +84,7 @@ class Playlist:
                 # O próprio método já incrementa o contador de reproduções
                 midia.reproduzir()
             
-    # Métodos de sobrecarga de operadores
+    # Métodos obrigatório de sobrecarga de operadores
     # Método para somar duas playlists
     def __add__(self, outra):
         """
@@ -157,7 +157,7 @@ class Playlist:
 
         return nomesOrdenados(self) == nomesOrdenados(outra)
 
-    # Métodos obrigatorios
+    # Métodos obrigatorios de classe comum a todas
     # Método __str__
     def __str__(self):
         midias_str = "\n    ".join(str(m).strip() for m in self.itens) if self.itens else "    Nenhuma mídia"

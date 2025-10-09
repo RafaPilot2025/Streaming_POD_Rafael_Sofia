@@ -15,23 +15,9 @@ class Usuario:
         Usuario.qtde_instancias += 1
         #self.id = id(self)  # ID único baseado no endereço de memória do objeto
         self.data_criacao = datetime.now()
+       
     
-    # Métodos obrigatorios __str__ e __repr__
-    def __str__(self):
-        return (f"Usuário: {self.nome} | "
-                f"Listas de reprodução: {len(self.playlists)} | "
-                f"Musicas no histórico: {len(self.historico)} | "
-               # f"ID: {self.id}, | "
-                f"Criado em: {self.data_criacao.strftime('%Y-%m-%d %H:%M:%S')}")
-    
-    def __repr__(self):
-        return (f"Usuário: {self.nome} | "
-                f"Número de Playlists: {self.playlists} | "
-                f"Quantidade de músicas no histórico: {self.historico} | "
-              #  f"Identificador único: {self.id} | "
-                f"Usuário criado em: {self.data_criacao}")
-    
-    #Métodos obrogatórios do exercício
+    #Métodos obrigatórios para a classe
     # Cria uma lista: parâmetro seu nome
     def criar_playlist(self, nome: str):
         """Adiciona uma playlist criada ao usuário corrente."""
@@ -57,6 +43,24 @@ class Usuario:
     def registrar_reproducao(self, musica: str):
         """Adiciona uma música escutada ao histórico de reproduções."""
         self.historico.append(musica)
+
+    
+    # Métodos obrigatorios de todas as classes
+    # ToString
+    def __str__(self):
+        return (f"Usuário: {self.nome} | "
+                f"Listas de reprodução: {len(self.playlists)} | "
+                f"Musicas no histórico: {len(self.historico)} | "
+               # f"ID: {self.id}, | "
+                f"Criado em: {self.data_criacao.strftime('%Y-%m-%d %H:%M:%S')}")
+    
+    # Representação oficial
+    def __repr__(self):
+        return (f"Usuário: {self.nome} | "
+                f"Número de Playlists: {self.playlists} | "
+                f"Quantidade de músicas no histórico: {self.historico} | "
+              #  f"Identificador único: {self.id} | "
+                f"Usuário criado em: {self.data_criacao}")
     
 
 if __name__ == "__main__":

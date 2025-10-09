@@ -20,6 +20,7 @@ class Analises:
     Apenas calcula a partir das coleções fornecidas, sem alterar o estado dos objetos.
     """
 
+    # Métodos obrigatórios estáticos
     # Estatísticas e relatórios solicitados
     @staticmethod
     def top_musicas_reproduzidas(musicas, top_n = 10):

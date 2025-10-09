@@ -96,7 +96,7 @@ def importar_markdowns_para_main(app):
 
         # Exibir avisos/erros da leitura dos markdown (parser)
         for w in result.get("warnings", []):
-            print(" - ATENÇÃO:", w)
+            print(" - WARN:", w)
         for e in result.get("errors", []):
             print(" - ERRO:", e)
 

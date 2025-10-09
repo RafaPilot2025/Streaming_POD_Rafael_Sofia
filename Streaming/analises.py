@@ -1,3 +1,4 @@
+#\Streaming\analises.py
 # Importação das bibliotecas necessárias e permitidas pelo trabalho
 import sys
 import os

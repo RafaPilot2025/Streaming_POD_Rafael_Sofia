@@ -1,4 +1,5 @@
 # config/lermarkdown.py
+
 # Importa as bibliotecas possíveis e/ou necessárias
 from pathlib import Path
 from datetime import datetime
@@ -67,11 +68,14 @@ class LerMarkdown:
         Encontra a seção de cada objeto que deve começar com #
         Instancia os objetos colocando primeiro em um temporário
         Faz até encontrar o final da seção que deve começar com ---."""
+        
         # Faz reset nos atributos no objeto LerMarkdown
         self._reset_estados()
         secao = None
         buf = []
         current = None
+        # Faz reset nos logs
+        self.warnings = []
 
         lines = text.splitlines()
         i = 0
@@ -225,7 +229,26 @@ class LerMarkdown:
                 playlists_titles = [(t or "").strip() for t in pl_do_md if (t or "").strip()]
             else:
                 playlists_titles = []
-            
+
+            # >>> NOVO BLOCO: detectar duplicatas e logar ERRO
+            seen, dups, unicos = set(), [], []
+            for t in playlists_titles:
+                key = self._norm(t)              # normaliza para comparar (strip+lower)
+                if key in seen:
+                    dups.append(t)               # guarda o texto original que se repetiu
+                else:
+                    seen.add(key)
+                    unicos.append(t)
+
+            if dups:
+                self._log_err(
+                    f"Usuário '{nome}' possui playlists duplicadas: {dups}. "
+                    f"Mantendo uma ocorrência de cada."
+                )
+
+            playlists_titles = unicos
+            # <<< FIM DO NOVO BLOCO
+
             # Cria o usuário 
             u = self.make_usuario(nome, playlists_titles)
             
@@ -238,6 +261,7 @@ class LerMarkdown:
             # Ou seja, pegue o valor da chave "titulo" desse dicionário”
             # Se a chave não existir, retorna None e não dê erro
             titulo  = (r.get("titulo")  or "").strip()
+            titulo_norm = self._norm(titulo)
             artista = (r.get("artista") or "").strip()
             genero  = (r.get("genero")  or "").strip()
             dur_raw = (r.get("duracao") or "").strip()
@@ -245,8 +269,8 @@ class LerMarkdown:
             if not titulo:
                 self._log_err("Música sem título; ignorada.", r)
                 continue
-            if titulo in self._midias_by_titulo:
-                self._log_warn(f"Mídia (título) duplicada '{titulo}'. Mantendo a primeira.")
+            if titulo_norm in self._midias_by_titulo:
+                self._log_warn(f"Mídia com título duplicado '{titulo}'. Mantendo a primeira.")
                 continue
 
             dur_int = self._to_int(dur_raw, default=None)
@@ -260,11 +284,12 @@ class LerMarkdown:
                     continue
 
             m = self._make_musica(titulo, artista, genero, dur_int)
-            self._midias_by_titulo[titulo] = m
+            self._midias_by_titulo[titulo_norm] = m
 
     def _load_podcasts(self, records):
         for r in records:
             titulo     = (r.get("titulo")     or "").strip()
+            titulo_norm = self._norm(titulo)
             temporada  = (r.get("temporada")  or "").strip()
             ep_raw     = (r.get("episodio")   or "").strip()
             host       = (r.get("host")       or "").strip()
@@ -273,8 +298,8 @@ class LerMarkdown:
             if not titulo:
                 self._log_err("Podcast sem título; ignorado.", r)
                 continue
-            if titulo in self._midias_by_titulo:
-                self._log_warn(f"Mídia (título) duplicada '{titulo}'. Mantendo a primeira.")
+            if titulo_norm in self._midias_by_titulo:
+                self._log_warn(f"Mídia com título duplicado '{titulo}'. Mantendo a primeira.")
                 continue
 
             ep_int = self._to_int(ep_raw, default=None)
@@ -297,7 +322,7 @@ class LerMarkdown:
                     continue
 
             p = self._make_podcast(titulo, temporada, ep_int, host, dur_int)
-            self._midias_by_titulo[titulo] = p
+            self._midias_by_titulo[titulo_norm] = p
 
     def _load_playlists(self, records):
         for r in records:
@@ -362,7 +387,7 @@ class LerMarkdown:
             titles = self._get_playlist_titles(pl)
             resolved, missing = [], []
             for t in titles:
-                obj = self._midias_by_titulo.get(t)
+                obj = self._midias_by_titulo.get(self._norm(t))
                 if obj is None:
                     missing.append(t)
                 else:
@@ -490,10 +515,12 @@ class LerMarkdown:
         filtrados = []
         if self._midias_by_titulo:
             for t in (itens_titles or []):
-                tt = (t or "").strip()
+                tt = (t or "").strip()                
                 if not tt:
                     continue
-                if tt in self._midias_by_titulo:
+                # Faz a normalização para buscar no catálogo 
+                tt_norm = self._norm(tt)
+                if tt_norm in self._midias_by_titulo:
                     filtrados.append(tt)
                 else:
                     self._log_err(f"Playlist '{nome}' contém item inexistente '{tt}'; removido.")

@@ -1,4 +1,4 @@
-#menu.py
+#\Streaming\menu.py
 
 class Menu:
     def __init__(self):
@@ -9,7 +9,7 @@ class Menu:
             "4": "Sair"
         }
         self.opcoes_usuario = {
-            "1": "Reproduzir uma música",
+            "1": "Reproduzir mídia",
             "2": "Listar músicas",
             "3": "Listar podcasts",
             "4": "Listar playlists",

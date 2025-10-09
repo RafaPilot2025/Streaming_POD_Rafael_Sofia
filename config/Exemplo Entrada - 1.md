@@ -56,7 +56,7 @@
 - titulo: Cinema em Debate  
     temporada: CineCast  
     episodio: 42  
-    host: João Oliveira  
+    host: Oprah Winfrey  
     duracao: 1800
     
 - titulo: História da Música  

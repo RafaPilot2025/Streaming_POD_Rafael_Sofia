@@ -1709,3 +1709,209 @@ ERRORS:
  - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
  - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
  - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 19:35:15] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Playlist 'Favoritas' contém itens inexistentes: ['Bohemian Rhapsody', 'Shape of You', 'Lose Yourself']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Lose Yourself', 'Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Fur Elise', 'Inteligência Artificial Hoje']. Ignorados.
+ - Playlist 'Estudos' contém itens inexistentes: ['História da Música', 'Fur Elise']. Ignorados.
+ - Playlist 'Chill' contém itens inexistentes: ['Rolling in the Deep', 'Cinema em Debate']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Bohemian Rhapsody'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Lose Yourself'; removido.
+ - Playlist 'Treino' contém item inexistente 'Lose Yourself'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Fur Elise'; removido.
+ - Playlist 'Relax' contém item inexistente 'Inteligência Artificial Hoje'; removido.
+ - Playlist 'Estudos' contém item inexistente 'História da Música'; removido.
+ - Playlist 'Estudos' contém item inexistente 'Fur Elise'; removido.
+ - Playlist 'Chill' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Chill' contém item inexistente 'Cinema em Debate'; removido.
+[2025-10-08 19:35:15] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Bohemian Rhapsody', 'Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Lose Yourself', 'Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Fur Elise', 'Inteligência Artificial Hoje', 'Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Bohemian Rhapsody'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Lose Yourself'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Fur Elise'; removido.
+ - Playlist 'Relax' contém item inexistente 'Inteligência Artificial Hoje'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 19:40:02] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 1.md
+WARNINGS:
+ - Playlist 'Favoritas' contém itens inexistentes: ['Bohemian Rhapsody', 'Shape of You', 'Lose Yourself']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Lose Yourself', 'Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Fur Elise', 'Inteligência Artificial Hoje']. Ignorados.
+ - Playlist 'Estudos' contém itens inexistentes: ['História da Música', 'Fur Elise']. Ignorados.
+ - Playlist 'Chill' contém itens inexistentes: ['Rolling in the Deep', 'Cinema em Debate']. Ignorados.
+[2025-10-08 19:40:02] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Bohemian Rhapsody', 'Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Lose Yourself', 'Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Fur Elise', 'Inteligência Artificial Hoje', 'Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 19:42:53] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 19:45:26] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 20:13:28] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Mídia com título duplicado 'Bohemian Rhapsody'. Mantendo a primeira.
+ - Mídia com título duplicado 'Shape of You'. Mantendo a primeira.
+ - Mídia com título duplicado 'Lose Yourself'. Mantendo a primeira.
+ - Mídia com título duplicado 'Fur Elise'. Mantendo a primeira.
+ - Mídia com título duplicado 'Inteligência Artificial Hoje'. Mantendo a primeira.
+ - Mídia com título duplicado 'Cinema em Debate'. Mantendo a primeira.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Música Inexistente']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+[2025-10-08 20:16:30] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Mídia com título duplicado 'Bohemian Rhapsody'. Mantendo a primeira.
+ - Mídia com título duplicado 'Shape of You'. Mantendo a primeira.
+ - Mídia com título duplicado 'Lose Yourself'. Mantendo a primeira.
+ - Mídia com título duplicado 'Fur Elise'. Mantendo a primeira.
+ - Mídia com título duplicado 'Inteligência Artificial Hoje'. Mantendo a primeira.
+ - Mídia com título duplicado 'Cinema em Debate'. Mantendo a primeira.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Música Inexistente']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+[2025-10-08 20:20:20] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 20:24:27] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Mídia com título duplicado 'Bohemian Rhapsody'. Mantendo a primeira.
+ - Mídia com título duplicado 'Shape of You'. Mantendo a primeira.
+ - Mídia com título duplicado 'Lose Yourself'. Mantendo a primeira.
+ - Mídia com título duplicado 'Fur Elise'. Mantendo a primeira.
+ - Mídia com título duplicado 'Inteligência Artificial Hoje'. Mantendo a primeira.
+ - Mídia com título duplicado 'Cinema em Debate'. Mantendo a primeira.
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Música Inexistente']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+[2025-10-08 20:25:54] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 20:26:10] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 20:35:59] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Usuário 'Carlos' possui playlists duplicadas: ['Relax']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.
+[2025-10-08 20:39:30] Fonte: C:\Git_hub\Streaming_POD_Rafael_Sofia\config\Exemplo Entrada - 2.md
+WARNINGS:
+ - Duração inválida para música 'Shape of You': '-240'. Ignorada (strict=False).
+ - Episódio inválido em 'Inteligência Artificial Hoje': 'quinze'. Usando 0.
+ - Duração inválida para podcast 'Cinema em Debate': '0'. Ignorado (strict=False).
+ - Playlist 'Relax' tem itens repetidos: ['Shape of You']. Mantendo uma ocorrência de cada.
+ - Playlist 'Chill' ignorada: usuário 'joão' inexistente no banco de dados.
+ - Playlist 'Favoritas' contém itens inexistentes: ['Shape of You', 'Música Inexistente']. Ignorados.
+ - Playlist 'Treino' contém itens inexistentes: ['Rolling in the Deep']. Ignorados.
+ - Playlist 'Relax' contém itens inexistentes: ['Shape of You']. Ignorados.
+ERRORS:
+ - Usuário 'Carlos' possui playlists duplicadas: ['Relax']. Mantendo uma ocorrência de cada.
+ - Playlist 'Favoritas' contém item inexistente 'Shape of You'; removido.
+ - Playlist 'Favoritas' contém item inexistente 'Música Inexistente'; removido.
+ - Playlist 'Treino' contém item inexistente 'Rolling in the Deep'; removido.
+ - Playlist 'Relax' contém item inexistente 'Shape of You'; removido.

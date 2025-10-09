@@ -1,4 +1,4 @@
-# Streaming de Música — Trabalho de Programação Orientada a Dados (PUCRS)
+# Streaming de Mídia — Trabalho de Programação Orientada a Dados (PUCRS)
 
 ## O Projeto:
 Este repositório contém a implementação do sistema de streaming de mídia "Streaming POD", desenvolvido como trabalho da disciplina Programação Orientada a Dados (PUCRS), sob orientação do Prof. Me. Otávio Parraga.

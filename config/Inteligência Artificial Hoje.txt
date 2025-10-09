@@ -1,32 +1,37 @@
 <Maria Silva>: Bem-vindos ao “Inteligência Artificial Hoje”! 
-	       No estúdio, direto do tunel do tempo o famoso professor de IA Socrates
+	           No estúdio, direto do tunel do tempo o famoso professor de IA Socrates
 
-<Socrates>:    Boa tarde! Se Platão tivesse Python, a caverna teria logging.
+<Socrates>:    Bom dia! Como eu diria na antiguidade:
+				Só sei que nada sei: e é justamente aí que começa toda a inteligência artificial de hoje..
 
 <Maria Silva>: Professor, o senhor poderia dizer que a IA é um novo Sócrates? 
-	       Ou um estagiário que não dorme?
-<Socrates>:    Os dois. Faz perguntas incômodas e, ao mesmo tempo, compila às três da manhã sem café.
+	       		Ou um estagiário que não dorme?
+<Socrates>:    Os dois! A IA faz perguntas incômodas e, ao mesmo tempo, compila às três da manhã sem café.
 
-<Maria Silva>: O senhor dá aula de IA. Qual a dica de ouro pros alunos?
+<Maria Silva>: O senhor dá aula de IA. Qual a dica de ouro para os alunos?
 <Socrates>:    Nomeiem variáveis como se vocês fossem entender amanhã. 
-               Porque amanhã chega.
+               Porque o amanhã sempre chega.
 
-<Maria Silva>: A IA vai tirar empregos?
+<Maria Silva>: A IA vai tirar empregos dos futuros alunos?
 <Socrates>:    Vai tirar empregos de quem copia/cola sem pensar. 
                De quem pensa, vira exoesqueleto cognitivo.
 
 <Maria Silva>: O senhor não curte esportes, certo? Gosta de correr?
-<Socrates>:    Não! Corrida? Só de complexidade: troco O(n²) por O(n log n) e comemoro com chimarrão.
+<Socrates>:    Não! Corrida para mim só a de complexidade: troco O(n²) por O(n log n) e comemoro com chimarrão.
 
 <Maria Silva>: Qual a maior falácia que os alunos têm sobre IA?
-<Socrates>:    Que é magia. Não é. É estatística com autoestima.
+<Socrates>:    Que é magia! Não é, é estatística com autoestima!
 
-<Maria Silva>: Dica final pros alunos que estudam IA?
-<Socrates>:    Valide entradas, trate exceções e lembrem: “se não está testado, é poesia”. 
-	       Bonita, porém quebra.
+<Maria Silva>: Dica final para os alunos que estudam IA?
+<Socrates>:    Valide entradas, trate exceções e lembrem-se: se não está testado, não é algorítimo, é poesia; 
+	       		é bonita, porém quebra.
 
 <Maria Silva>: Filosofia em uma linha de código?
 <Socrates>:    if verdade: questione().
 
-<Maria Silva>: Professor Socrates, muito obrigado!
-<Socrates>:    Eu que agradeço.
+<Maria Silva>: Professor Socrates, muito obrigado! E um último pensamento filosófico...
+<Socrates>:    Eu que agradeço!
+				Na caverna das ideias, só enxergamos as sombras das classes concretas…
+				mas é nas abstratas que reside a verdadeira essência.
+				E quanto aos iteradores, meu caro, 
+				eles são as almas que percorrem o mundo das listas em busca do conhecimento eterno.

@@ -178,7 +178,7 @@ Playlist mais popular: Favoritas
 
 ## Inovações:
 
-1. **Exibição do contaúdo do PodCast e da letra da música durante a reprodução das músicas**  
+1. **Exibição do conteúdo do PodCast e da letra da música durante a reprodução das músicas**  
    O sistema localiza automaticamente o arquivo `.txt` correspondente ao título da mídia e exibe todo o conteúdo ou a letra da mídia.
 
 2. **Sistema de Avaliação Interativo**  

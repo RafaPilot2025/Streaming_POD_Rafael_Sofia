@@ -1,9 +1,9 @@
 # Streaming de Música — Trabalho de Programação Orientada a Dados (PUCRS)
 
 ## O Projeto:
-Este repositório contém a implementação completa do sistema de streaming musical "Streaming POD", desenvolvido como trabalho da disciplina Programação Orientada a Dados (PUCRS), sob orientação do Prof. Me. Otávio Parraga.
+Este repositório contém a implementação do sistema de streaming de mídia "Streaming POD", desenvolvido como trabalho da disciplina Programação Orientada a Dados (PUCRS), sob orientação do Prof. Me. Otávio Parraga.
 
-O projeto é inspirado em plataformas como Spotify, aplicando os principais conceitos de Programação Orientada a Objetos (POO) — como herança, encapsulamento e abstração — aliados a tratamento de erros, relatórios automáticos e inovação.
+O projeto é inspirado em plataformas como Spotify, aplicando os principais conceitos de Programação Orientada a Dados — como herança, encapsulamento e abstração — aliados a tratamento de erros, relatórios automáticos e inovação.
 
 ---
 
@@ -50,7 +50,7 @@ O sistema permite que usuários criem contas, montem playlists, reproduzam mídi
 ### Músicas e Podcasts
 - Leitura automática de mídias a partir de arquivos Markdown.
 - Exibição das letras das músicas durante a reprodução **(inovação)**.
-- Sistema de avaliações interativas** com notas de 0 a 5 **(inovação)**.
+- Sistema de avaliações interativas com notas de 0 a 5 **(inovação)**.
 - Tratamento de dados ausentes e normalização de títulos.
 
 ### Playlists
@@ -83,7 +83,7 @@ Tratando validações como:
 ## Entrada de Dados via arquivo markdown .md:
 
 Os dados iniciais são carregados automaticamente da pasta `config/`.  
-Todos os arquivos da parta são lidos e processados.
+Todos os arquivos da pasta são lidos e processados.  
 Cada arquivo `.md` pode conter blocos de:
 - Usuários  
 - Músicas  
@@ -178,8 +178,8 @@ Playlist mais popular: Favoritas
 
 ## Inovações:
 
-1. **Exibição de letras durante a reprodução das músicas**  
-   O sistema localiza automaticamente o arquivo `.txt` correspondente ao título da música e exibe as letras linha por linha, simulando uma experiência real de player musical.
+1. **Exibição do contaúdo do PodCast e da letra da música durante a reprodução das músicas**  
+   O sistema localiza automaticamente o arquivo `.txt` correspondente ao título da mídia e exibe todo o conteúdo ou a letra da mídia.
 
 2. **Sistema de Avaliação Interativo**  
    Após a reprodução, o usuário é convidado a avaliar a música (nota de 0 a 5).  
@@ -195,6 +195,6 @@ Essas duas inovações tornam o projeto mais imersivo e personalizado, estendend
 **Rafael Magalhães**  
 **Sofia Lahham**  
 
-**Orientação:** Prof. Me. **Otávio Parraga**  
+Orientação: Prof. Me. Otávio Parraga  
 PUCRS — Escola Politécnica  
 Disciplina: *Programação Orientada a Dados*

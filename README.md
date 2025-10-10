@@ -28,6 +28,7 @@ Streaming_POD_Rafael_Sofia/
 │   ├── Exemplo Entrada - 2.md      # Arquivo de entrada Markdown
 │   ├── lermarkdown.py              # Leitura e validação dos arquivos .md
 │   ├── Bohemian Rhapsody.txt       # Exemplo de letra de música
+│   ├── Cinema em Debate.txt        # Exemplo de conteúdo de PodCast
 │
 ├── logs/
 │   └── erros.log                   # Registro de erros e inconsistências
